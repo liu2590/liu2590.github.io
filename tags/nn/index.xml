@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NN on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+    <link>http://liu2590.github.io/tags/nn/</link>
+    <description>Recent content in NN on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 12 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://liu2590.github.io/tags/nn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>神经网络简介[zz]</title>
+      <link>http://liu2590.github.io/post/nn/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/nn/</guid>
+      <description>在神经网络最初实现的一个世纪前，Ada Lovelace 就有建立一个“神经系统的微积分”的野心，尽管将大脑同机器类比和计算哲学一样历史悠久，但直到Ada的老</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CNN on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+    <link>http://liu2590.github.io/tags/cnn/</link>
+    <description>Recent content in CNN on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 12 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://liu2590.github.io/tags/cnn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Purdue机器学习入门（一）手写数字分类</title>
+      <link>http://liu2590.github.io/post/purdue1/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue1/</guid>
+      <description>MNIST数据集和数字分类 开始使用神经网络学习深度学习时，会发现最强大的监督深度学习技术之一是卷积神经网络（“CNN”）。CNN的最终结构实</description>
+    </item>
+    
+    <item>
+      <title>视觉识别中的神经网络[zz]</title>
+      <link>http://liu2590.github.io/post/cs231/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/cs231/</guid>
+      <description>用于视觉识别的CS231n卷积神经网络[转] 卷积神经网络（CNN / ConvNets） 卷积神经网络与前一章的普通神经网络非常相似：它们由具有可</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Purdue机器学习入门 on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+    <link>http://liu2590.github.io/categories/purdue%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/</link>
+    <description>Recent content in Purdue机器学习入门 on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 21 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://liu2590.github.io/categories/purdue%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Purdue机器学习入门（六）yolo v3进行物体探测之训练自己的数据</title>
+      <link>http://liu2590.github.io/post/purdue6yolov3/</link>
+      <pubDate>Thu, 21 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue6yolov3/</guid>
+      <description>yolov3 训练自己的数据集 历时6个月，从零开始学习深度学习，第一个小目标是实现物体探测，在经历过多个坑后，今天终于实现了。记录一下过程。 1 先放最后的</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（五）图像探测</title>
+      <link>http://liu2590.github.io/post/purdue5detect/</link>
+      <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue5detect/</guid>
+      <description>图像探测与分割 这部分是我此次学习的初衷，在见识了人工智能中深度学习的强大后，开始思考它们在哪里能够应用。以下图片均来自于 github。 图像探</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（四）画风迁移</title>
+      <link>http://liu2590.github.io/post/purdue4style/</link>
+      <pubDate>Fri, 08 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue4style/</guid>
+      <description>Author: Alexis Jacq Edited by: Winston Herring 基本原则（Underlying Principle） 定义两个距离，一个用于内容（$ D_C $），一个用于样式$ D_S $）。 $ D_C $测量两个图</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（三）COCO数据集导入</title>
+      <link>http://liu2590.github.io/post/purdue3coco/</link>
+      <pubDate>Wed, 30 Jan 2019 23:59:59 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue3coco/</guid>
+      <description>Python IDE之争 究竟改用哪个编程呢？对于高手来说用 记事本 都可以。但是对于普通人来说还是有必要选选的，Pycharm , Visual Studio Code都不错。但今天开</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（二）迁移学习</title>
+      <link>http://liu2590.github.io/post/purdue2transfer/</link>
+      <pubDate>Wed, 23 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue2transfer/</guid>
+      <description>迁移学习 我们学习了数字分类后举一反三可以对任何物品进行分类，比如经典的猫狗分类，蜜蜂蚂蚁分类等，只是改变了cnn的一些参数和模型即可，随着我</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（一）手写数字分类</title>
+      <link>http://liu2590.github.io/post/purdue1/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue1/</guid>
+      <description>MNIST数据集和数字分类 开始使用神经网络学习深度学习时，会发现最强大的监督深度学习技术之一是卷积神经网络（“CNN”）。CNN的最终结构实</description>
+    </item>
+    
+  </channel>
+</rss>

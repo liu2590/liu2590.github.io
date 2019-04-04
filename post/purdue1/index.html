@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Purdue机器学习入门（一）手写数字分类 - Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jeff Liu" /><meta name="description" content="MNIST数据集和数字分类 开始使用神经网络学习深度学习时，会发现最强大的监督深度学习技术之一是卷积神经网络（“CNN”）。CNN的最终结构实" /><meta name="keywords" content="Python, ML, DL" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://liu2590.github.io/post/purdue1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Purdue机器学习入门（一）手写数字分类" />
+<meta property="og:description" content="MNIST数据集和数字分类 开始使用神经网络学习深度学习时，会发现最强大的监督深度学习技术之一是卷积神经网络（“CNN”）。CNN的最终结构实" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liu2590.github.io/post/purdue1/" /><meta property="article:published_time" content="2019-01-12T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-12T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Purdue机器学习入门（一）手写数字分类">
+<meta itemprop="description" content="MNIST数据集和数字分类 开始使用神经网络学习深度学习时，会发现最强大的监督深度学习技术之一是卷积神经网络（“CNN”）。CNN的最终结构实">
+
+
+<meta itemprop="datePublished" content="2019-01-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2584">
+
+
+
+<meta itemprop="keywords" content="CNN," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Purdue机器学习入门（一）手写数字分类"/>
+<meta name="twitter:description" content="MNIST数据集和数字分类 开始使用神经网络学习深度学习时，会发现最强大的监督深度学习技术之一是卷积神经网络（“CNN”）。CNN的最终结构实"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jeff Liu</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home ·</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives ·</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags ·</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories ·</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+
+<div class="logo-wrapper" style="background:  url('logo.ico') no-repeat;background-size: 60% 100%; " >
+
+  <a href="/" class="logo" >Jeff Liu</a>
+</div>
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Purdue机器学习入门（一）手写数字分类</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-12 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"> 深度学习 </a>
+            <a href="/categories/purdue%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/"> Purdue机器学习入门 </a>
+            </div>
+          <span class="more-meta"> 约 2584 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#mnist数据集和数字分类">MNIST数据集和数字分类</a>
+<ul>
+<li><a href="#为什么采用卷积神经网络">为什么采用卷积神经网络</a></li>
+</ul></li>
+<li><a href="#cnn中的图层">CNN中的图层</a>
+<ul>
+<li><a href="#卷积层">卷积层</a></li>
+<li><a href="#池化层">池化层</a></li>
+<li><a href="#一组完全连接的图层">一组完全连接的图层</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><img src="purdue.jpg" alt="mnist" />
+<img src="mnist.png" alt="mnist" /></p>
+
+<h1 id="mnist数据集和数字分类">MNIST数据集和数字分类</h1>
+
+<p>开始使用神经网络学习深度学习时，会发现最强大的监督深度学习技术之一是卷积神经网络（“CNN”）。CNN的最终结构实际上与常规神经网络（RegularNets）非常相似，其中存在具有权重和偏差的神经元。此外，就像在RegularNets中一样，我们在CNN中使用损失函数（例如crossentropy或softmax）和优化器（例如adam optimizer）。在CNN中，还有卷积层，池化层和展平层。CNN主要用于图像分类，也可以用在其他应用领域，如自然语言处理。</p>
+
+<h2 id="为什么采用卷积神经网络">为什么采用卷积神经网络</h2>
+
+<p>RegularNets的主要结构特征是所有神经元都相互连接。例如，当我们有28 x 28像素且只有灰度的图像时，我们最终会在一层管理784（28 x 28 x 1）个神经元。但是，大多数图像具有更多像素，并且不是灰度的。因此，假设我们在4K Ultra HD中有一组彩色图像，我们将在第一层中有26,542,080（4096 x 2160 x 3）个不同的神经元彼此连接，这样数据太大了。因此，我们可以说RegularNets不可扩展用于图像分类。然而，特别是当涉及图像时，两个单独的像素之间似乎几乎没有相关性，这导致了Convolutional Layers和Pooling Layers的出现。</p>
+
+<h1 id="cnn中的图层">CNN中的图层</h1>
+
+<p>我们能够在卷积神经网络中使用许多不同的层。但是，卷积，池化和完全连接层是最重要的。</p>
+
+<h2 id="卷积层">卷积层</h2>
+
+<p>卷积层是我们从数据集中的图像中提取特征的第一层。由于像素仅与相邻像素和近像素相关，因此卷积允许我们保持图像的不同部分之间的关​​系。卷积基本上是用较小的像素滤波器对图像进行滤波，以减小图像的大小而不会丢失像素之间的关系。当我们通过使用具有1x1步的3x3滤波器（每步1个像素）将卷积应用于5x5图像时。我们最终会有3x3的输出（复杂性降低64％）。</p>
+
+<p><img src="conv.png" alt="conv" />
+图1：5 x 5像素图像与3 x 3像素滤镜的对比（步幅= 1 x 1像素）</p>
+
+<h2 id="池化层">池化层</h2>
+
+<p>在构造CNN时，通常在每个卷积层之后插入池化层以减小表示的空间大小以减少参数计数，这降低了计算复杂度。此外，池化层也有助于解决过度拟合问题。基本上，我们通过选择这些像素内的最大值，平均值或总和值来选择池大小以减少参数量。Max Pooling是最常见的池化技术之一，可以演示如下：</p>
+
+<p><img src="pool.png" alt="pool" />
+最大池数为2 x 2</p>
+
+<h2 id="一组完全连接的图层">一组完全连接的图层</h2>
+
+<p>完全连接的网络是我们的RegularNet，其中每个参数彼此链接以确定标签上每个参数的真实关系和影响。由于卷积和池化层使我们的时空复杂性大大降低，我们最终可以构建一个完全连接的网络来对图像进行分类。一组完全连接的层看起来像这样：</p>
+
+<p><img src="nn.png" alt="nn" />
+具有两个隐藏层的完全连接层</p>
+
+<p><img src="cnn.jpeg" alt="cnn" />
+卷积神经网络实例
+了解了可以构建用于图像分类的卷积神经网络，我们可以进行图像分类练习：MNIST数据集</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">import os  #python库
+import torch  #torch库 pytorch是python深度学习框架，和tensorflow，Caffe，MXnet一样，底层的框架
+import torch.nn as nn
+import torch.utils.data as Data
+import torchvision
+import matplotlib.pyplot as plt  #绘图库，用于结果显示
+
+# 深度学习超参数，就是一些参数而已
+EPOCH = 1  # 训练次数
+BATCH_SIZE = 50  #每次训练一个太浪费，所以每次训练一批，一批的大小根据处理器性能等自己定
+LR = 0.01  # 学习率，简单讲，越小训练效果越好，训练时间越长
+DOWNLOAD_MNIST = False  #是自己导入数据，还是从网上下载数据集
+PATH = &#39;..\data\mnist&#39;  #下载位置
+# Mnist digits dataset
+if not (os.path.exists(PATH)) or not os.listdir(PATH):
+    # not mnist dir or mnist is empyt dir
+    DOWNLOAD_MNIST = True
+    print(&#39;no download&#39;)
+#导入MNIST数据集，专为新手设计，MNIST 数据集来自美国国家标准与技术研究所（话说米国官方公布很多有用的数据）,由来自 250 个不同人手写的数字构成, 50% 高中学生, 50% 人口普查局工作人员.
+train_data = torchvision.datasets.MNIST(
+    root=PATH,
+    train=True,  # this is training data 要导入训练集true， 测试集false
+    transform=torchvision.transforms.ToTensor(
+    ),  # Converts a PIL.Image or numpy.ndarray to 格式转换，从图像数据或者numpy数据转换为pytorch使用的数据
+    # torch.FloatTensor of shape (C x H x W) and normalize in the range [0.0, 1.0]
+    download=DOWNLOAD_MNIST,
+)
+
+# plot one example
+print(train_data.train_data.size())  # (60000, 28, 28) 共计60000幅图像，像素大小28×28
+print(train_data.train_labels.size())  # (60000)
+plt.imshow(train_data.train_data[0].numpy(), cmap=&#39;gray&#39;)  #显示第一个数字
+plt.title(&#39;%i&#39; % train_data.train_labels[0])
+plt.show()
+ls = train_data.train_data[0].numpy()
+# Data Loader for easy mini-batch return in training, the image batch shape will be (50, 1, 28, 28)
+#第二个重点，将数据集导入train_loader，不要问为什么，设计好的导入数据方法，此坑不要浪费时间
+train_loader = Data.DataLoader(
+    dataset=train_data, batch_size=BATCH_SIZE,
+    shuffle=True)  #没有GPU的千万不要选num_worker
+
+# pick 2000 samples to speed up testing
+test_data = torchvision.datasets.MNIST(root=PATH, train=False)
+test_x = torch.unsqueeze(
+    test_data.test_data, dim=1
+).type(
+    torch.FloatTensor
+)[:2000] / 255.  # shape from (2000, 28, 28) to (2000, 1, 28, 28), value in range(0,1)
+test_y = test_data.test_labels[:2000]
+
+
+class CNN(
+        nn.Module
+):  #神经网络层数设计，模式都是固定的，只需要根据情况增加层数（几层合适，还没有完善理论，都是摸索出来的，比如有16层的，有254层的等），并且更改参数，参数的含义是重点研究的，
+    def __init__(self):
+        super(CNN, self).__init__()
+        self.conv1 = nn.Sequential(  # input shape (1, 28, 28)
+            nn.Conv2d(
+                in_channels=1,  # input height  数字是单色灰度的写1，rgb的写3
+                out_channels=16,  # n_filters   卷积核数量，我也不知道为什么16，15也可以
+                kernel_size=5,  # filter size   卷积核大小，5×5 3×3 据说还有1×1
+                stride=1,  # filter movement/step   卷积移动步数，1就是走一步，图像大可能需要多跨过几步
+                padding=2, #                    跨多了就会影响边界，所以要padding
+                # if want same width and length of this image after Conv2d, padding=(kernel_size-1)/2 if stride=1
+            ),  # output shape (16, 28, 28)
+            nn.ReLU(),  # activation    激活层，还有其他形式，这个比较常见
+            nn.MaxPool2d(   #池化层，理解为降维，减少数据量，28×28的图像之后就变为14×14，两次后就变为7×7
+                kernel_size=2
+            ),  # choose max value in 2x2 area, output shape (16, 14, 14)
+        )
+        self.conv2 = nn.Sequential(  # input shape (16, 14, 14)
+            nn.Conv2d(16, 32, 5, 1, 2),  # output shape (32, 14, 14)
+            nn.ReLU(),  # activation
+            nn.MaxPool2d(2),  # output shape (32, 7, 7)
+        )
+        self.out = nn.Linear(32 * 7 * 7, #全连接层，这是最后一层，输入为32 * 7 * 7，输出为0,1,2...9共计十个
+                             10)  # fully connected layer, output 10 classes
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = x.view(
+            x.size(0),
+            -1)  # flatten the output of conv2 to (batch_size, 32 * 7 * 7)
+        output = self.out(x)
+        return output, x  # return x for visualization
+
+
+cnn = CNN()
+print(cnn)  # net architecture
+
+optimizer = torch.optim.Adam(   #优化方法，最基本的是梯度下降，Adam是稍微改善的方法
+    cnn.parameters(), lr=LR)  # optimize all cnn parameters
+loss_func = nn.CrossEntropyLoss()  # the target label is not one-hotted 损失函数
+
+plt.ion()
+# training and testing 开始训练
+for epoch in range(EPOCH):
+    for step, (b_x, b_y) in enumerate(
+            train_loader
+    ):  # gives batch data, normalize x when iterate train_loader
+
+        output = cnn(b_x)[0]  # cnn output
+        loss = loss_func(output, b_y)  # cross entropy loss
+        optimizer.zero_grad()  # clear gradients for this training step
+        loss.backward()  # backpropagation, compute gradients
+        optimizer.step()  # apply gradients
+
+        if step % 50 == 0:
+            test_output, last_layer = cnn(test_x)
+            pred_y = torch.max(test_output, 1)[1].data.numpy()
+            accuracy = float(
+                (pred_y == test_y.data.numpy()).astype(int).sum()) / float(
+                    test_y.size(0))
+            print(&#39;Epoch: &#39;, epoch, &#39;|Step: &#39;, step,
+                  &#39;| train loss: %.4f&#39; % loss.data.numpy(),
+                  &#39;| test accuracy: %.2f&#39; % accuracy)
+
+
+torch.save(cnn, &#39;net.pkl&#39;)  # 保存整个网络，便于以后再次调用
+torch.save(cnn.state_dict(), &#39;net_params.pkl&#39;)  # 只保存网络中的参数 (速度快, 占内存少)
+
+net2 = torch.load(&#39;net.pkl&#39;)
+
+
+# print 10 predictions from test data
+test_output, _ = net2(test_x[:30])
+pred_y = torch.max(test_output, 1)[1].data.numpy()
+print(pred_y, &#39;prediction number&#39;)
+print(test_y[:30].numpy(), &#39;real number&#39;)
+lls = &#34;[&#34;
+for ii in range(30):
+    if (pred_y[ii] != test_y[ii]):
+        lls += &#34;1 &#34;
+        # plt.imshow(test_x[ii].numpy(), cmap=&#39;gray&#39;)
+        # plt.title(&#39;%i&#39; % test_y[ii])
+        # plt.show()
+    else:
+        lls += &#34;0 &#34;
+print(lls + &#34;]&#34;)</pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jeff Liu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2019-01-12</span>
+  </p>
+  
+  
+</div><div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/wechat-1.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/alipay-1.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/cnn/">CNN</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/latex/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">LaTex公式</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/cnn/">
+            <span class="next-text nav-default">卷积神经网络[zz]</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'liu2590-github-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:liu2590@purdue.edu" class="iconfont icon-email" title="email"></a>
+      <a href="liu2590@purdue.edu" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="liu2590" class="iconfont icon-github" title="github"></a>
+  <a href="http://liu2590.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jeff Liu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132979174-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

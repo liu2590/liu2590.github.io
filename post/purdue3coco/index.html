@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Purdue机器学习入门（三）COCO数据集导入 - Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jeff Liu" /><meta name="description" content="Python IDE之争 究竟改用哪个编程呢？对于高手来说用 记事本 都可以。但是对于普通人来说还是有必要选选的，Pycharm , Visual Studio Code都不错。但今天开" /><meta name="keywords" content="Python, ML, DL" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://liu2590.github.io/post/purdue3coco/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Purdue机器学习入门（三）COCO数据集导入" />
+<meta property="og:description" content="Python IDE之争 究竟改用哪个编程呢？对于高手来说用 记事本 都可以。但是对于普通人来说还是有必要选选的，Pycharm , Visual Studio Code都不错。但今天开" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liu2590.github.io/post/purdue3coco/" /><meta property="article:published_time" content="2019-01-30T23:59:59&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-30T23:59:59&#43;00:00"/>
+
+<meta itemprop="name" content="Purdue机器学习入门（三）COCO数据集导入">
+<meta itemprop="description" content="Python IDE之争 究竟改用哪个编程呢？对于高手来说用 记事本 都可以。但是对于普通人来说还是有必要选选的，Pycharm , Visual Studio Code都不错。但今天开">
+
+
+<meta itemprop="datePublished" content="2019-01-30T23:59:59&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-30T23:59:59&#43;00:00" />
+<meta itemprop="wordCount" content="820">
+
+
+
+<meta itemprop="keywords" content="COCO," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Purdue机器学习入门（三）COCO数据集导入"/>
+<meta name="twitter:description" content="Python IDE之争 究竟改用哪个编程呢？对于高手来说用 记事本 都可以。但是对于普通人来说还是有必要选选的，Pycharm , Visual Studio Code都不错。但今天开"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jeff Liu</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home ·</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives ·</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags ·</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories ·</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+
+<div class="logo-wrapper" style="background:  url('logo.ico') no-repeat;background-size: 60% 100%; " >
+
+  <a href="/" class="logo" >Jeff Liu</a>
+</div>
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Purdue机器学习入门（三）COCO数据集导入</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-30 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"> 深度学习 </a>
+            <a href="/categories/purdue%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/"> Purdue机器学习入门 </a>
+            </div>
+          <span class="more-meta"> 约 820 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#python-ide之争">Python IDE之争</a></li>
+<li><a href="#coco的用法">COCO的用法</a></li>
+<li><a href="#结果显示">结果显示：</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><img src="purdue.jpg" alt="mnist" /></p>
+
+<h1 id="python-ide之争">Python IDE之争</h1>
+
+<blockquote>
+<p>究竟改用哪个编程呢？对于高手来说用 <em>记事本</em> 都可以。但是对于普通人来说还是有必要选选的，Pycharm , Visual Studio Code都不错。但今天开始用Jupyter了，编程远不如以上两个IDE，但是学习机器学习还是非常合适的。<a href="../jupyter">Jupyter配置方法</a></p>
+</blockquote>
+
+<h1 id="coco的用法">COCO的用法</h1>
+
+<p>直接看代码吧。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">%matplotlib inline
+from pycocotools.coco import COCO
+import numpy as np
+import skimage.io as io
+import matplotlib.pyplot as plt
+import pylab
+# pylab.rcParams[&#39;figure.figsize&#39;] = (8.0, 10.0)
+  
+plt.rcParams[&#39;font.sans-serif&#39;] = [u&#39;SimHei&#39;]
+plt.rcParams[&#39;axes.unicode_minus&#39;] = False
+
+dataDir=&#39;D:/ML/data/coco&#39;
+dataType=&#39;val2017&#39;
+annFile=&#39;{}/annotations/instances_{}.json&#39;.format(dataDir,dataType)
+
+# 导入数据库
+coco=COCO(annFile)
+
+# 显示数据集全部分类及super分类
+cats = coco.loadCats(coco.getCatIds())
+nms=[cat[&#39;name&#39;] for cat in cats]
+print(&#39;COCO categories: \n{}\n&#39;.format(&#39; &#39;.join(nms)))
+
+nms = set([cat[&#39;supercategory&#39;] for cat in cats])
+print(&#39;COCO supercategories: \n{}&#39;.format(&#39; &#39;.join(nms)))
+
+# 从满足特征标签的数据中随机选一个
+catIds = coco.getCatIds(catNms=[&#39;person&#39;,&#39;dog&#39;]);
+imgIds = coco.getImgIds(catIds=catIds );
+img = coco.loadImgs(imgIds[np.random.randint(0,len(imgIds))])[0]
+
+# 根据名称打开该图片
+# I = io.imread(&#39;%s/images/%s/%s&#39;%(dataDir,dataType,img[&#39;file_name&#39;]))
+# 根据网址下载该图片
+I = io.imread(img[&#39;coco_url&#39;])
+plt.axis(&#39;off&#39;)
+plt.title(img[&#39;file_name&#39;])
+plt.imshow(I)
+plt.show()
+
+# 显示注释
+plt.imshow(I); plt.axis(&#39;off&#39;)
+annIds = coco.getAnnIds(imgIds=img[&#39;id&#39;], catIds=catIds, iscrowd=None)
+anns = coco.loadAnns(annIds)
+coco.showAnns(anns)
+plt.show()
+# 导入人的keypoints
+annFile = &#39;{}/annotations/person_keypoints_{}.json&#39;.format(dataDir,dataType)
+coco_kps=COCO(annFile)
+
+# 显示人的keypoints
+plt.imshow(I); plt.axis(&#39;off&#39;)
+ax = plt.gca()
+annIds = coco_kps.getAnnIds(imgIds=img[&#39;id&#39;], catIds=catIds, iscrowd=None)
+anns = coco_kps.loadAnns(annIds)
+coco_kps.showAnns(anns)
+plt.show()
+# 导入描述
+annFile = &#39;{}/annotations/captions_{}.json&#39;.format(dataDir,dataType)
+coco_caps=COCO(annFile)
+
+from googletrans import Translator
+translator = Translator()
+#导入google翻译
+
+# 显示描述
+annIds = coco_caps.getAnnIds(imgIds=img[&#39;id&#39;]);
+anns = coco_caps.loadAnns(annIds)
+for s in anns:#翻译描述内容 
+    print(translator.translate(s[&#39;caption&#39;], dest=&#39;zh-cn&#39;).text)
+coco_caps.showAnns(anns)
+plt.imshow(I); plt.axis(&#39;off&#39;); plt.show()</pre></td></tr></table>
+</div>
+</div>
+<h1 id="结果显示">结果显示：</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">loading annotations into memory...
+Done (t=1.00s)
+creating index...
+index created!
+COCO categories: 
+person bicycle car motorcycle airplane bus train truck boat traffic light fire hydrant stop sign parking meter bench bird cat dog horse sheep cow elephant bear zebra giraffe backpack umbrella handbag tie suitcase frisbee skis snowboard sports ball kite baseball bat baseball glove skateboard surfboard tennis racket bottle wine glass cup fork knife spoon bowl banana apple sandwich orange broccoli carrot hot dog pizza donut cake chair couch potted plant bed dining table toilet tv laptop mouse remote keyboard cell phone microwave oven toaster sink refrigerator book clock vase scissors teddy bear hair drier toothbrush
+
+COCO supercategories: 
+furniture animal sports kitchen person electronic food outdoor vehicle appliance accessory indoor</pre></td></tr></table>
+</div>
+</div>
+<p><img src="output_0_1.png" alt="png" /></p>
+
+<p><img src="output_0_2.png" alt="png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">loading annotations into memory...
+Done (t=0.53s)
+creating index...
+index created!</pre></td></tr></table>
+</div>
+</div>
+<p><img src="output_0_4.png" alt="png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">loading annotations into memory...
+Done (t=0.08s)
+creating index...
+index created!
+一个家庭在院子里和他们的狗一起玩飞盘。
+这只狗在一个和两个孩子一起玩的成年人附近跑。
+一个男人，两个孩子和一只狗正在玩飞盘。
+当一只狗跑来跑去时，一个男人向一个院子里的小男孩扔球。
+一个男人正在和两个孩子和一只狗玩耍。
+A family outside in a yard playing frisbee with their dog. 
+The dog runs near an adult who plays with two children.
+A man, two kids and a dog are playing Frisbee.
+A man throws a ball with to small boys in a yard as a dog runs around.
+A man is playing catch with two children and a dog. </pre></td></tr></table>
+</div>
+</div>
+<p><img src="output_0_6.png" alt="png" /></p>
+
+<p><a href="cocoDemo.ipynb">附上Jupyter源代码</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jeff Liu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2019-01-30</span>
+  </p>
+  
+  
+</div><div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/wechat-1.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/alipay-1.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/coco/">COCO</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/purdue4style/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Purdue机器学习入门（四）画风迁移</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/coco/">
+            <span class="next-text nav-default">COCO图像数据集</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'liu2590-github-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:liu2590@purdue.edu" class="iconfont icon-email" title="email"></a>
+      <a href="liu2590@purdue.edu" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="liu2590" class="iconfont icon-github" title="github"></a>
+  <a href="http://liu2590.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jeff Liu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132979174-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

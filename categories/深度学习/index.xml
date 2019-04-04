@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>深度学习 on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+    <link>http://liu2590.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in 深度学习 on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 21 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://liu2590.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Purdue机器学习入门（六）yolo v3进行物体探测之训练自己的数据</title>
+      <link>http://liu2590.github.io/post/purdue6yolov3/</link>
+      <pubDate>Thu, 21 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue6yolov3/</guid>
+      <description>yolov3 训练自己的数据集 历时6个月，从零开始学习深度学习，第一个小目标是实现物体探测，在经历过多个坑后，今天终于实现了。记录一下过程。 1 先放最后的</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（五）图像探测</title>
+      <link>http://liu2590.github.io/post/purdue5detect/</link>
+      <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue5detect/</guid>
+      <description>图像探测与分割 这部分是我此次学习的初衷，在见识了人工智能中深度学习的强大后，开始思考它们在哪里能够应用。以下图片均来自于 github。 图像探</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（四）画风迁移</title>
+      <link>http://liu2590.github.io/post/purdue4style/</link>
+      <pubDate>Fri, 08 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue4style/</guid>
+      <description>Author: Alexis Jacq Edited by: Winston Herring 基本原则（Underlying Principle） 定义两个距离，一个用于内容（$ D_C $），一个用于样式$ D_S $）。 $ D_C $测量两个图</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（三）COCO数据集导入</title>
+      <link>http://liu2590.github.io/post/purdue3coco/</link>
+      <pubDate>Wed, 30 Jan 2019 23:59:59 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue3coco/</guid>
+      <description>Python IDE之争 究竟改用哪个编程呢？对于高手来说用 记事本 都可以。但是对于普通人来说还是有必要选选的，Pycharm , Visual Studio Code都不错。但今天开</description>
+    </item>
+    
+    <item>
+      <title>COCO图像数据集</title>
+      <link>http://liu2590.github.io/post/coco/</link>
+      <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/coco/</guid>
+      <description>COCO Common Objects in Context 介绍 COCO是一种大规模的对象检测，分割和字幕数据集。简单说就是包括一堆图片和这些图片的解释（json格式，包含图片内容描述，特征</description>
+    </item>
+    
+    <item>
+      <title>Jupyter及其虚环境配置（windows版本）</title>
+      <link>http://liu2590.github.io/post/jupyter/</link>
+      <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/jupyter/</guid>
+      <description>python虚环境建立 python安装完成后需要建立虚环境，虚环境好处就不多说了，必须用 打开cmd，cd到想建立的文件夹下,Jvenv就是建</description>
+    </item>
+    
+    <item>
+      <title>Microsoft COCO：Common Objects in Context[翻译]</title>
+      <link>http://liu2590.github.io/post/cocopaper/</link>
+      <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/cocopaper/</guid>
+      <description>2015年2月21日 Tsung-Yi Lin Michael Maire Serge Belongie Lubomir Bourdev Ross Girshick James Hays Pietro Perona Deva Ramanan C. Lawrence Zitnick ar Piotr Doll&amp;rsquo; 摘要 我们提出了一个新的数据集，其目标是通过将对象识别的问题置于更广泛的场景理</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（二）迁移学习</title>
+      <link>http://liu2590.github.io/post/purdue2transfer/</link>
+      <pubDate>Wed, 23 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue2transfer/</guid>
+      <description>迁移学习 我们学习了数字分类后举一反三可以对任何物品进行分类，比如经典的猫狗分类，蜜蜂蚂蚁分类等，只是改变了cnn的一些参数和模型即可，随着我</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（一）手写数字分类</title>
+      <link>http://liu2590.github.io/post/purdue1/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue1/</guid>
+      <description>MNIST数据集和数字分类 开始使用神经网络学习深度学习时，会发现最强大的监督深度学习技术之一是卷积神经网络（“CNN”）。CNN的最终结构实</description>
+    </item>
+    
+    <item>
+      <title>卷积神经网络[zz]</title>
+      <link>http://liu2590.github.io/post/cnn/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/cnn/</guid>
+      <description>卷积神经网络 简称CNN或简称 - 是深度学习的核心，近年来作为神经网络研究中最突出的应变而出现。他们彻底改变了计算机视觉，在许多基本任务中取得了</description>
+    </item>
+    
+    <item>
+      <title>神经网络简介[zz]</title>
+      <link>http://liu2590.github.io/post/nn/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/nn/</guid>
+      <description>在神经网络最初实现的一个世纪前，Ada Lovelace 就有建立一个“神经系统的微积分”的野心，尽管将大脑同机器类比和计算哲学一样历史悠久，但直到Ada的老</description>
+    </item>
+    
+    <item>
+      <title>视觉识别中的神经网络[zz]</title>
+      <link>http://liu2590.github.io/post/cs231/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/cs231/</guid>
+      <description>用于视觉识别的CS231n卷积神经网络[转] 卷积神经网络（CNN / ConvNets） 卷积神经网络与前一章的普通神经网络非常相似：它们由具有可</description>
+    </item>
+    
+  </channel>
+</rss>

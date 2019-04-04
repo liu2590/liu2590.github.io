@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>视觉识别中的神经网络[zz] - Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jeff Liu" /><meta name="description" content="用于视觉识别的CS231n卷积神经网络[转] 卷积神经网络（CNN / ConvNets） 卷积神经网络与前一章的普通神经网络非常相似：它们由具有可" /><meta name="keywords" content="Python, ML, DL" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://liu2590.github.io/post/cs231/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="视觉识别中的神经网络[zz]" />
+<meta property="og:description" content="用于视觉识别的CS231n卷积神经网络[转] 卷积神经网络（CNN / ConvNets） 卷积神经网络与前一章的普通神经网络非常相似：它们由具有可" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liu2590.github.io/post/cs231/" /><meta property="article:published_time" content="2019-01-12T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-12T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="视觉识别中的神经网络[zz]">
+<meta itemprop="description" content="用于视觉识别的CS231n卷积神经网络[转] 卷积神经网络（CNN / ConvNets） 卷积神经网络与前一章的普通神经网络非常相似：它们由具有可">
+
+
+<meta itemprop="datePublished" content="2019-01-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="16686">
+
+
+
+<meta itemprop="keywords" content="CNN," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="视觉识别中的神经网络[zz]"/>
+<meta name="twitter:description" content="用于视觉识别的CS231n卷积神经网络[转] 卷积神经网络（CNN / ConvNets） 卷积神经网络与前一章的普通神经网络非常相似：它们由具有可"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jeff Liu</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home ·</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives ·</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags ·</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories ·</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+
+<div class="logo-wrapper" style="background:  url('logo.ico') no-repeat;background-size: 60% 100%; " >
+
+  <a href="/" class="logo" >Jeff Liu</a>
+</div>
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">视觉识别中的神经网络[zz]</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-12 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"> 深度学习 </a>
+            </div>
+          <span class="more-meta"> 约 16686 字 </span>
+          <span class="more-meta"> 预计阅读 34 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#卷积神经网络-cnn-convnets">卷积神经网络（CNN / ConvNets）</a>
+<ul>
+<li><a href="#架构概述">架构概述</a></li>
+<li><a href="#neural-net2-neural-net2-jpeg-neural-net2-cnn-cnn-jpeg-cnn"><img src="neural_net2.jpeg" alt="neural_net2" title="neural_net2" /><img src="cnn.jpeg" alt="cnn" title="cnn" /></a></li>
+<li><a href="#用于构建convnets的图层">用于构建ConvNets的图层</a></li>
+<li><a href="#卷积层">卷积层</a></li>
+<li><a href="#neuron-model-neuron-model-jpeg-neuron-model"><img src="neuron_model.jpeg" alt="neuron_model" title="neuron_model" /></a></li>
+<li><a href="#池化层">池化层</a></li>
+<li><a href="#规范化层">规范化层</a></li>
+<li><a href="#完全连接的层">完全连接的层</a></li>
+<li><a href="#将fc层转换为conv层">将FC层转换为CONV层</a></li>
+</ul></li>
+<li><a href="#convnet架构">ConvNet架构</a>
+<ul>
+<li><a href="#图层模式">图层模式</a></li>
+<li><a href="#图层大小模式">图层大小模式</a></li>
+<li><a href="#实例探究">实例探究</a></li>
+<li><a href="#计算考虑因素">计算考虑因素</a></li>
+</ul></li>
+<li><a href="#其他资源">其他资源</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><img src="tag-bg.png" alt="" />
+用于视觉识别的CS231n卷积神经网络[转]</p>
+
+<h1 id="卷积神经网络-cnn-convnets">卷积神经网络（CNN / ConvNets）</h1>
+
+<p>卷积神经网络与前一章的普通神经网络非常相似：它们由具有可学习权重和偏差的神经元组成。每个神经元接收一些输入，执行点积并且可选地以非线性跟随它。整个网络仍然表现出单一的可微分数函数：从一端的原始图像像素到另一端的类别分数。并且它们在最后（完全连接）层上仍然具有损失功能（例如SVM / Softmax），并且我们为学习常规神经网络而开发的所有提示/技巧仍然适用。</p>
+
+<p>那有什么变化？ConvNet架构明确假设输入是图像，这允许我们将某些属性编码到架构中。然后，这些使得前向功能更有效地实现并且大大减少了网络中的参数量。</p>
+
+<h2 id="架构概述">架构概述</h2>
+
+<p>回想一下：常规神经网络。正如我们在前一章中看到的，神经网络接收输入（单个向量），并通过一系列隐藏层对其进行转换。每个隐藏层由一组神经元组成，其中每个神经元完全连接到前一层中的所有神经元，并且单个层中的神经元完全独立地运行并且不共享任何连接。最后一个完全连接的层称为“输出层”，在分类设置中它表示类别得分。</p>
+
+<p>常规神经网络无法很好地扩展到完整图像。在CIFAR-10中，图像尺寸仅为32x32x3（32个宽，32个高，3个颜色通道），因此在常规神经网络的第一个隐藏层中的单个完全连接的神经元将具有32 * 32 * 3 = 3072个权重。这个数量似乎仍然可以控制，但显然这种完全连接的结构不能扩展到更大的图像。例如，更可观的尺寸的图像，例如200×200×3，将导致具有200 * 200 * 3 = 120,000个权重的神经元。而且，我们几乎肯定会想要几个这样的神经元，所以参数会很快加起来！显然，这种完全连接是浪费的，并且大量参数很快就会导致过度拟合。</p>
+
+<p>3D体积的神经元。卷积神经网络利用输入由图像组成的事实，并以更合理的方式约束架构。特别是，与常规神经网络不同，ConvNet的各层具有三维排列的神经元：宽度，高度，深度。（注意深度这个词这里指的是激活体积的第三维，而不是完整神经网络的深度，它可以指网络中的总层数。）例如，CIFAR-10中的输入图像是输入体积激活，体积的尺寸为32x32x3（宽度，高度，深度）。正如我们将很快看到的那样，一层中的神经元只会在它之前连接到层的一个小区域，而不是以完全连接的方式连接到所有神经元。此外，CIFAR-10的最终输出层的尺寸为1x1x10，因为在ConvNet架构结束时，我们会将整个图像缩小为沿着深度维度排列的单个分数矢量。这是一个可视化：</p>
+
+<hr />
+
+<h2 id="neural-net2-neural-net2-jpeg-neural-net2-cnn-cnn-jpeg-cnn"><img src="neural_net2.jpeg" alt="neural_net2" title="neural_net2" /><img src="cnn.jpeg" alt="cnn" title="cnn" /></h2>
+
+<p>上：常规3层神经网络。下：ConvNet在三个维度（宽度，高度，深度）中排列其神经元，如在其中一个层中可视化。ConvNet的每一层都将3D输入体积转换为神经元激活的3D输出体积。在此示例中，红色输入图层保持图像，因此其宽度和高度将是图像的尺寸，深度将为3（红色，绿色，蓝色通道）。
+ConvNet由图层组成。每个图层都有一个简单的API：它将输入的3D体积转换为输出的3D体积，具有一些可能有或没有参数的可微函数。</p>
+
+<p>T</p>
+
+<h2 id="用于构建convnets的图层">用于构建ConvNets的图层</h2>
+
+<p>如上所述，简单的ConvNet是一系列层，ConvNet的每一层都通过可微函数将一个激活体积转换为另一个激活体积。我们使用三种主要类型的层来构建ConvNet架构：卷积层，池化层和完全连接层（完全如常规神经网络中所见）。我们将堆叠这些层以形成完整的ConvNet 架构。</p>
+
+<p>示例架构：概述。我们将在下面详细介绍，但是一个简单的ConvNet for CIFAR-10分类可以有架构[INPUT - CONV - RELU - POOL - FC]。更详细：</p>
+
+<ul>
+<li>INPUT [32x32x3]将保持图像的原始像素值，在这种情况下是宽度为32，高度为32且具有三个颜色通道R，G，B的图像。</li>
+<li>CONV层将计算连接到输入中的局部区域的神经元的输出，每个神经元计算它们的权重与它们在输入体积中连接的小区域之间的点积。如果我们决定使用12个过滤器，这可能会导致诸如[32x32x12]的音量。</li>
+<li>RELU层将应用元素激活函数，例如m a x（0 ，x）阈值为零。这使得体积的大小保持不变（[32x32x12]）。</li>
+<li>POOL层将沿空间维度（宽度，高度）执行下采样操作，从而产生诸如[16x16x12]的音量。</li>
+<li>FC（即完全连接）层将计算类别得分，导致大小的体积[1x1x10]，其中10个数字中的每一个对应于类别得分，例如10个类别的CIFAR-10。与普通的神经网络一样，顾名思义，该层中的每个神经元都将连接到前一卷中的所有数字。
+通过这种方式，ConvNets逐层将原始图像从原始像素值转换为最终的类得分。请注意，某些图层包含参数而其他图层不包含。特别地，CONV / FC层执行的变换不仅是输入体积中的激活的函数，而且还是参数（神经元的权重和偏差）的函数。另一方面，RELU / POOL层将实现固定功能。CONV / FC层中的参数将使用梯度下降进行训练，以便ConvNet计算的类得分与每个图像的训练集中的标签一致。</li>
+</ul>
+
+<p>综上所述：</p>
+
+<ul>
+<li>ConvNet架构在最简单的情况下是一个图层列表，它将图像卷转换为输出卷（例如，保持班级分数）</li>
+<li>有几种不同类型的图层（例如CONV / FC / RELU / POOL是目前最受欢迎的）</li>
+<li>每个图层都接受输入3D体积，并通过可微分函数将其转换为输出3D体积</li>
+<li>每个层可能有也可能没有参数（例如CONV / FC do，RELU / POOL不）</li>
+<li>每个层可能有也可能没有额外的超参数（例如CONV / FC / POOL，RELU没有）</li>
+</ul>
+
+<p>ConvNet架构示例的激活。初始卷存储原始图像像素（左），最后一个卷存储类分数（右）。沿着处理路径的每个激活量显示为列。由于难以可视化3D体积，因此我们将每个体积的切片排列成行。最后一个图层卷保存每个类的分数，但在这里我们只显示排序的前5个分数，并打印每个分数的标签。完整的基于Web的演示显示在我们网站的标题中。这里显示的架构是一个微小的VGG网络，我们将在后面讨论。
+我们现在描述各个层以及它们的超参数及其连接性的细节。</p>
+
+<hr />
+
+<p><img src="convnet.jpeg" alt="convnet" title="convnet" /></p>
+
+<hr />
+
+<h2 id="卷积层">卷积层</h2>
+
+<p>Conv层是卷积网络的核心构建块，可以完成大部分计算繁重的工作。</p>
+
+<p>没有大脑的概述和直觉。让我们首先讨论CONV层在没有脑/神经元类比的情况下计算的内容。CONV层的参数由一组可学习的过滤器组成。每个滤镜在空间上都很小（沿宽度和高度），但延伸到输入音量的整个深度。例如，ConvNet第一层上的典型滤波器可能具有5x5x3的尺寸（即5像素宽度和高度，以及3，因为图像具有深度3，颜色通道）。在前向传递过程中，我们在输入体积的宽度和高度上滑动（更准确地说，卷积）每个滤波器，并计算滤波器条目和任何位置输入之间的点积。当我们在输入体积的宽度和高度上滑动滤波器时，我们将生成一个二维激活图，该图在每个空间位置给出该滤波器的响应。直观地说，网络将学习当他们看到某种类型的视觉特征时激活的过滤器，例如某些方向的边缘或第一层上某种颜色的斑点，或最终在网络的较高层上的整个蜂窝或轮状图案。现在，我们将在每个CONV层中有一整套过滤器（例如12个过滤器），并且每个过滤器将生成一个单独的二维激活图。我们将沿深度维度堆叠这些激活图并生成输出量。并且它们中的每一个都将产生单独的二维激活图。</p>
+
+<p>大脑观。如果您是大脑/神经元类比的粉丝，3D输出体积中的每个条目也可以被解释为神经元的输出，其仅查看输入中的小区域并且与左侧的所有神经元共享参数。在空间上（因为这些数字都来自应用相同的过滤器）。我们现在讨论神经元连通性的细节，它们在空间中的排列以及它们的参数共享方案。</p>
+
+<p>本地连接。当处理诸如图像的高维输入时，如上所述，将神经元连接到前一卷中的所有神经元是不切实际的。相反，我们将每个神经元连接到输入体积的局部区域。这种连接的空间范围是一个超参数，称为神经元的感受野（相当于这是滤波器的大小）。沿深度轴的连通程度始终等于输入音量的深度。重要的是要再次强调我们如何处理空间尺寸（宽度和高度）和深度尺寸的不对称性：连接在空间中是局部的（沿宽度和高度），但始终沿输入体积的整个深度充满。</p>
+
+<p>例1。例如，假设输入音量大小为[32x32x3]，（例如RGB CIFAR-10图像）。如果感受野（或滤波器大小）是5x5，那么Conv层中的每个神经元将具有输入体积中[5x5x3]区域的权重，总共5 * 5 * 3 = 75个权重（和+1）偏见参数）。请注意，沿深度轴的连接范围必须为3，因为这是输入音量的深度。</p>
+
+<p>例2。假设输入音量大小为[16x16x20]。然后使用3x3的示例接收字段大小，Conv层中的每个神经元现在将具有到输入音量的总共3 * 3 * 20 = 180个连接。请注意，同样，连接在空间中是局部的（例如3x3），但在输入深度（20）处是完整的。</p>
+
+<hr />
+
+<p><img src="depthcol.jpeg" alt="depthcol" title="depthcol" /></p>
+
+<h2 id="neuron-model-neuron-model-jpeg-neuron-model"><img src="neuron_model.jpeg" alt="neuron_model" title="neuron_model" /></h2>
+
+<p>左：红色的示例输入体积（例如，32x32x3 CIFAR-10图像），以及第一个卷积层中的示例神经元体积。卷积层中的每个神经元仅在空间上连接到输入体积中的局部区域，但是连接到全深度（即所有颜色通道）。注意，沿深度有多个神经元（在本例中为5个），所有神经元都在输入中查看相同的区域 - 请参阅下面文本中深度列的讨论。右：来自神经网络章节的神经元保持不变：它们仍然计算其权重的点积与输入后跟非线性，但它们的连通性现在被限制为局部空间。
+空间安排。我们已经解释了Conv层中每个神经元与输入体积的连通性，但我们尚未讨论输出体积中有多少神经元或它们的排列方式。三个超参数控制输出音量的大小：深度，步幅和零填充。我们接下来讨论这些：</p>
+
+<ol>
+<li>首先，输出音量的深度是一个超参数：它对应于我们想要使用的滤波器数量，每个滤波器都学习在输入中寻找不同的东西。例如，如果第一卷积层将原始图像作为输入，则沿着深度维度的不同神经元可以在存在各种定向边缘或颜色斑点的情况下激活。我们将参考一组神经元，它们都将输入的相同区域视为深度列（有些人也更喜欢术语“ 光纤”）。</li>
+<li>其次，我们必须指定我们滑动过滤器的步幅。当步幅为1时，我们一次移动滤波器一个像素。当步幅为2（或者通常为3或更多时，虽然这在实践中很少见），然后当我们滑动它们时，滤波器一次跳跃2个像素。这将在空间上产生较小的输出量。</li>
+<li>我们很快就会看到，有时在边界周围用零填充输入音量会很方便。这个零填充的大小是一个超参数。零填充的一个很好的特性是它允许我们控制输出体积的空间大小（最常见的是我们很快就会看到它会用它来精确地保留输入体积的空间大小，使输入和输出宽度和高度是一样的）。
+我们可以计算输出体积的空间大小作为输入体积大小的函数（W），Conv层神经元的感受野大小（F.），它们应用的步幅（S.），以及使用的零填充量（P.） 在边界。你可以说服自己，计算多少神经元“适合”的正确公式由（W- F.+ 2 P ）/ S.+ 1。例如，对于具有步幅1和焊盘0的7x7输入和3x3滤波器，我们将获得5x5输出。通过步幅2，我们将获得3x3输出。让我们再看一个图形示例：</li>
+</ol>
+
+<hr />
+
+<p><img src="stride.jpeg" alt="stride" title="stride" /></p>
+
+<p>空间安排的例证。在这个例子中，只有一个空间维度（x轴），一个神经元的感受野大小为F = 3，输入大小为W = 5，并且P = 1的填充为零。左：神经元跨步在S = 1的步幅中输入，给出大小（5 - 3 + 2）/ 1 + 1 = 5的输出。右：神经元使用S = 2的步幅，给出大小的输出（5 - 3 + 2） / 2 + 1 = 3.请注意，不能使用步幅S = 3，因为它不能整齐地穿过音量。根据等式，可以确定这一点，因为（5 - 3 + 2）= 4不能被3整除。
+神经元权重在这个例子中是[1,0，-1]（如右图所示），其中偏差为零。这些权重在所有黄色神经元之间共享（参见下面的参数共享）。</p>
+
+<hr />
+
+<p>使用零填充。在左上方的示例中，请注意输入维度为5且输出维度相等：也是5.这样做是因为我们的感知字段为3，我们使用零填充为1.如果没有使用零填充那么输出量的空间维度只有3，因为它是多少神经元在原始输入上“适合”。通常，将零填充设置为P = （F- 1 ）/ 2当步幅是S时= 1确保输入音量和输出音量在空间上具有相同的大小。以这种方式使用零填充是很常见的，当我们更多地讨论ConvNet架构时，我们将讨论完整的原因。</p>
+
+<p>对步伐的限制。再次注意，空间排列超参数具有相互约束。例如，当输入的大小为W时= 10，没有使用零填充P = 0，过滤器大小为F.= 3那么就不可能使用步幅S.= 2，自（W- F.+ 2 P ）/ S.+ 1 = （10 - 3 + 0 ）/ 2 + 1 = 4.5，即不是整数，表明神经元在输入上不整齐和“对称”。因此，超参数的这种设置被认为是无效的，并且ConvNet库可以抛出异常或零填充其余部分以使其适合，或裁剪输入以使其适合，或者某事。正如我们将在ConvNet架构部分中看到的那样，适当调整ConvNets的大小以使所有维度“解决”可能是一个真正的问题，使用零填充和一些设计指南将显着减轻。</p>
+
+<p>现实世界的例子。所述Krizhevsky等。在2012年赢得ImageNet挑战的架构接受了大小[227x227x3]的图像。在第一个卷积层上，它使用了具有感受野大小F的神经元= 11，大步走S.= 4没有零填充P = 0。由于（227-11）/ 4 + 1 = 55，并且因为Conv层具有K的深度= 96，Conv层输出量的大小为[55x55x96]。该体积中的55 * 55 * 96个神经元中的每一个连接到输入体积中大小为[11×11×3]的区域。此外，每个深度列中的所有96个神经元都连接到输入的相同[11x11x3]区域，但当然具有不同的权重。另外，如果您阅读实际纸张，它声称输入图像是224x224，这肯定是不正确的，因为（224 - 11）/ 4 + 1显然不是整数。这让ConvNets历史上的许多人感到困惑，对发生的事情知之甚少。我自己最好的猜测是Alex使用了3个额外像素的零填充，而他在论文中没有提到。</p>
+
+<p>参数共享。参数共享方案用于卷积层来控制参数的数量。使用上面的真实示例，我们看到第一个Conv层中有55 * 55 * 96 = 290,400个神经元，每个神经元有11 * 11 * 3 = 363个权重和1个偏差。总之，这仅在ConvNet的第一层上增加了290400 * 364 = 105,705,600个参数。显然，这个数字非常高。</p>
+
+<p>事实证明，通过做出一个合理的假设，我们可以大大减少参数的数量：如果一个特征对于在某个空间位置（x，y）计算是有用的，那么在不同位置计算它也应该是有用的（x2 ，y2）上。换句话说，将单个二维深度切片表示为深度切片（例如，体积大小[55x55x96]有96个深度切片，每个切片大小为[55x55]），我们将限制每个深度切片中的神经元使用相同的权重和偏差。使用此参数共享方案，我们示例中的第一个Conv层现在只有96个唯一权重集（每个深度切片一个），总共96 * 11 * 11 * 3 = 34,848个唯一权重，或34,944个参数（ +96偏见）。或者，每个深度切片中的所有55 * 55个神经元现在将使用相同的参数。在反向传播期间的实践中，体积中的每个神经元将计算其权重的梯度，但是这些梯度将在每个深度切片上相加并且仅更新每个切片的单个权重集。</p>
+
+<p>注意，如果在一个单一的深度切片所有神经元都使用相同的权重向量，则CONV层的直传可以在每个深度切片被计算为一个卷积神经元的与输入量（因此，名称权重：卷积层）。这就是为什么通常将权重集称为与输入卷积的过滤器（或内核）。</p>
+
+<hr />
+
+<p><img src="weights.jpeg" alt="weights" title="weights" /></p>
+
+<p>Krizhevsky等人学习的示例过滤器。这里显示的96个滤波器中的每一个都具有[11×11×3]的大小，并且每个滤波器在一个深度切片中由55 * 55个神经元共享。请注意，参数共享假设是相对合理的：如果检测到水平边缘在图像中的某个位置很重要，那么由于图像的平移不变结构，它应该在其他位置直观地有用。因此，不需要重新学习以在Conv层输出体积中的55 * 55个不同位置中的每一个处检测水平边缘。</p>
+
+<hr />
+
+<p>请注意，有时参数共享假设可能没有意义。当ConvNet的输入图像具有某些特定的中心结构时尤其如此，例如，我们应该期望在图像的一侧学习完全不同的特征而不是另一侧。一个实际的例子是当输入是在图像中居中的面部时。您可能期望在不同的空间位置可以（并且应该）学习不同的眼睛特定或头发特定的特征。在这种情况下，通常放宽参数共享方案，而只是简单地将该层称为局部连接层。</p>
+
+<p>Numpy例子。为了使上面的讨论更加具体，让我们在代码和特定的例子中表达相同的想法。假设输入卷是一个numpy数组X。然后：</p>
+
+<p>位置处的深度柱（或纤维）(x,y)将是激活X[x,y,:]。
+甲深度切片，或等效的激活图在深度d将是激活X[:,:,d]。
+转换层示例。假设输入音量X有形X.shape: (11,11,4)。进一步假设我们不使用零填充（P = 0），过滤器大小为F.= 5而且步幅是S= 2。因此输出音量将具有空间大小（11-5）/ 2 + 1 = 4，给出宽度和高度为4的音量。输出音量（调用它V）中的激活映射将如下所示（仅一些）在这个例子中计算了元素的数量）：</p>
+
+<p><code>- V[0,0,0] = np.sum(X[:5,:5,:] * W0) + b0
+- V[1,0,0] = np.sum(X[2:7,:5,:] * W0) + b0
+- V[2,0,0] = np.sum(X[4:9,:5,:] * W0) + b0
+- V[3,0,0] = np.sum(X[6:11,:5,:] * W0) + b0</code>
+请记住，在numpy中，*上面的操作表示数组之间的元素乘法。还要注意，权重向量W0是该神经元的权重向量，b0是偏差。这里，W0假设是形状W0.shape: (5,5,4)，因为滤波器大小是5并且输入音量的深度是4.注意，在每个点，我们正在计算在普通神经网络中如前所见的点积。此外，我们看到我们使用相同的重量和偏差（由于参数共享），并且沿宽度的尺寸以2为步长（即步幅）增加。要在输出卷中构建第二个激活映射，我们将：</p>
+
+<p><code>- V[0,0,1] = np.sum(X[:5,:5,:] * W1) + b1
+- V[1,0,1] = np.sum(X[2:7,:5,:] * W1) + b1
+- V[2,0,1] = np.sum(X[4:9,:5,:] * W1) + b1
+- V[3,0,1] = np.sum(X[6:11,:5,:] * W1) + b1
+- V[0,1,1] = np.sum(X[:5,2:7,:] * W1) + b1 （沿y走的例子）
+- V[2,3,1] = np.sum(X[4:9,6:11,:] * W1) + b1 （或两者兼而有之）</code>
+在那里我们看到我们正在索引V（在索引1处）第二个深度维度，因为我们正在计算第二个激活映射，并且W1现在使用了一组不同的参数（）。在上面的示例中，我们为了简洁而省略了Conv Layer将执行的一些其他操作以填充输出数组的其他部分V。另外，请记住，这些激活映射通常通过激活函数（如ReLU）按元素进行，但此处未显示。</p>
+
+<p>总结。总结一下，Conv层：</p>
+
+<ul>
+<li>接受体积W的体积1× H1× D1</li>
+<li>需要四个超参数：</li>
+<li>- 过滤器数量K.，</li>
+<li>- 他们的空间范围F.，</li>
+<li>- 步幅S.，</li>
+<li>- 零填充量P。</li>
+<li>产生大小为W的体积2× H2× D2 哪里：</li>
+<li>- w ^2= （W1- F.+ 2 P ）/ S.+ 1</li>
+<li>- H2= （H.1- F.+ 2 P ）/ S.+ 1 （即宽度和高度通过对称计算）</li>
+<li>- d2= K.</li>
+<li>通过参数共享，它引入了F⋅ ˚F⋅ d1每个过滤器的重量，总共（F⋅ ˚F⋅ d1）⋅ ķ重量和K. 偏见。</li>
+<li>在输出量中，d- 深度切片（大小为W.2× H2）是执行d的有效卷积的结果-th过滤输入音量，步长为S.，然后由d抵消偏见。
+超参数的常见设置是F.= 3 ，S= 1 ，P = 1。但是，有一些共同的惯例和经验法则可以激励这些超参数。请参阅下面的ConvNet架构部分。</li>
+</ul>
+
+<p>卷积演示。下面是CONV层的运行演示。由于3D体积难以可视化，所有体积（输入体积（蓝色），体重体积（红色），输出体积（绿色））都可视化，每个深度切片按行堆叠。输入音量为W1= 5 ，H1= 5 ，D1= 3，CONV层参数为K.= 2 ，F= 3 ，S= 2 ，P = 1。也就是说，我们有两个尺寸为3 × 3的滤镜并且它们以2的步幅应用。因此，输出音量大小具有空间大小（5 - 3 + 2）/ 2 + 1 = 3.此外，请注意P = 1的填充应用于输入音量，使输入音量的外边框为零。下面的可视化迭代输出激活（绿色），并显示每个元素的计算方法是将突出显示的输入（蓝色）与滤波器（红色）相乘，将其相加，然后通过偏差抵消结果。</p>
+
+<hr />
+
+<hr />
+
+<p>作为矩阵乘法的实现。注意，卷积操作基本上在滤波器和输入的局部区域之间执行点积。CONV层的一个常见实现模式是利用这一事实，并将卷积层的正向传递表示为一个大矩阵乘法，如下所示：</p>
+
+<ol>
+<li>输入图像中的局部区域在通常称为im2col的操作中被伸展成列。例如，如果输入是[227x227x3]并且要在步幅4处与11x11x3滤波器进行卷积，那么我们将在输入中采用[11x11x3]像素块并将每个块拉伸为大小为11 * 11 *的列向量3 = 363.在步长为4的输入中迭代此过程，沿宽度和高度给出（227-11）/ 4 + 1 = 55个位置，导致输出矩阵为大小为[363 x 3025] X_col的im2col，其中每个column是一个伸展的感受野，总共有55 * 55 = 3025。请注意，由于感知字段重叠，因此输入卷中的每个数字都可以在多个不同的列中重复。</li>
+<li>CONV层的重量类似地伸展成行。例如，如果有96个大小为[11x11x3]的过滤器，则会得到一个W_row大小为[96 x 363] 的矩阵。</li>
+<li>卷积的结果现在相当于执行一个大矩阵乘法np.dot(W_row, X_col)，它评估每个滤波器和每个感知场位置之间的点积。在我们的示例中，此操作的输出将为[96 x 3025]，从而给出每个位置处每个过滤器的点积的输出。</li>
+<li>最终必须将结果重新调整为适当的输出维度[55x55x96]。
+这种方法的缺点是它可以使用大量内存，因为输入卷中的某些值会被多次复制X_col。然而，好处是我们可以利用许多非常有效的矩阵乘法实现（例如，在常用的BLAS API中）。此外，可以重用相同的im2col思想来执行池化操作，我们将在下面讨论。</li>
+</ol>
+
+<p>反向传播。卷积运算的后向通道（对于数据和权重）也是卷积（但是具有空间翻转滤波器）。这很容易在玩具示例的一维情况下得出（暂时没有扩展）。</p>
+
+<p>1x1卷积。另外，一些论文使用1x1卷积，首先由Network in Network调查。有些人最初很难看到1x1卷积，特别是当他们来自信号处理背景时。通常信号是二维的，因此1x1卷积没有意义（它只是逐点缩放）。然而，在ConvNets中并非如此，因为我们必须记住我们在三维体积上操作，并且过滤器总是延伸到输入体积的整个深度。例如，如果输入为[32x32x3]，则执行1x1卷积将有效地执行三维点积（因为输入深度为3个通道）。</p>
+
+<p>扩张的卷积。最近的一项发展（例如参见Fisher Yu和Vladlen Koltun撰写的论文）是在CONV层引入另一个称为扩张的超参数。到目前为止，我们只讨论了连续的CONV过滤器。但是，可以使每个单元格之间有空格的过滤器称为扩张。例如，在一个维度中w，大小为3 的过滤器将通过输入计算x以下内容：w[0]*x[0] + w[1]*x[1] + w[2]*x[2]。这是0的扩张。对于扩张1，过滤器将改为计算w[0]*x[0] + w[1]*x[2] + w[2]*x[4]; 换句话说，应用程序之间存在1的差距。这在某些设置中非常有用，可以与0扩展滤波器结合使用，因为它允许您使用更少的层更加积极地合并输入中的空间信息。例如，如果你将两个3x3 CONV层堆叠在一起，那么你可以说服自己第二层的神经元是输入的5x5补丁的函数（我们可以说这些神经元的有效感受域是5×5）。如果我们使用扩张的卷积，那么这个有效的感受野会增长得更快。</p>
+
+<h2 id="池化层">池化层</h2>
+
+<p>通常在ConvNet架构中的连续Conv层之间定期插入池化层。其功能是逐步减小表示的空间大小，以减少网络中的参数和计算量，从而也控制过度拟合。Pooling Layer在输入的每个深度切片上独立运行，并使用MAX运算在空间上调整大小。最常见的形式是具有2x2大小的过滤器的池化层，沿着宽度和高度在输入中的每个深度切片沿着2个下行示例的步长，丢弃75％的激活。在这种情况下，每个MAX操作将采用最多超过4个数字（在某个深度切片中的小2x2区域）。深度维度保持不变。更一般地说，池化层：</p>
+
+<ul>
+<li>接受体积W的体积1× H1× D1</li>
+<li>需要两个超参数：
+&ndash;  他们的空间范围F.，</li>
+<li>- 步幅S.，</li>
+<li>产生大小为W的体积2× H2× D2 哪里：</li>
+<li>- w ^2= （W1- F.）/ S.+ 1</li>
+<li>- H2= （H.1- F.）/ S.+ 1</li>
+<li>- d2= D.1</li>
+<li>引入零参数，因为它计算输入的固定函数</li>
+<li>对于Pooling图层，使用零填充填充输入并不常见。
+值得注意的是，在实践中只发现了两个常见的最大池层变体：带有F的池化层= 3 ，S= 2（也称为重叠池），更常见的是F.= 2 ，S= 2。具有较大感受野的池大小太具破坏性。</li>
+</ul>
+
+<p>一般汇集。除了最大池化之外，池化单元还可以执行其他功能，例如平均池化甚至L2规范池化。平均汇集通常在历史上使用，但最近与最大汇集操作相比已失宠，已证明在实践中效果更好。</p>
+
+<hr />
+
+<p><img src="pool.jpeg" alt="pool" title="pool" />
+<img src="maxpool.jpeg" alt="maxpool" title="maxpool" /></p>
+
+<p>池化层在输入体积的每个深度切片中独立地在空间上下采样体积。左：在此示例中，大小为[224x224x64]的输入体积与过滤器大小为2，步长为2，输出量为[112x112x64]。请注意，保留了卷深度。右：最常见的下采样操作是max，产生最大池，这里以2的步幅显示。也就是说，每个最大值取4个数字（小2x2平方）。</p>
+
+<hr />
+
+<p>反向传播。回想一下backpropagation章节，max（x，y）操作的向后传递有一个简单的解释，因为它只将渐变路由到前向传递中具有最高值的输入。因此，在池化层的正向通过期间，通常跟踪最大激活的索引（有时也称为开关），使得梯度路由在反向传播期间是有效的。</p>
+
+<p>摆脱困境。许多人不喜欢汇集操作，并认为没有它就可以逃脱。例如，努力简化：All Convolutional Net建议废弃池化层，转而使用仅包含重复CONV层的架构。为了减小表示的大小，他们建议偶尔在CONV层中使用更大的步幅。还发现丢弃池化层在培养良好的生成模型中是重要的，例如变分自动编码器（VAE）或生成性对抗网络（GAN）。未来的架构很可能只​​有很少甚至没有池化层。</p>
+
+<h2 id="规范化层">规范化层</h2>
+
+<p>已经提出了许多类型的归一化层用于ConvNet架构，有时意图实现在生物脑中观察到的抑制方案。然而，这些层已经失宠，因为在实践中它们的贡献已被证明是最小的，如果有的话。有关各种类型的规范化，请参阅Alex Krizhevsky的cuda-convnet库API中的讨论。</p>
+
+<h2 id="完全连接的层">完全连接的层</h2>
+
+<p>完全连接层中的神经元与前一层中的所有激活具有完全连接，如常规神经网络中所示。因此，可以通过矩阵乘法后跟偏置偏移来计算它们的激活。有关详细信息，请参阅注释的“ 神经网络”部分。</p>
+
+<h2 id="将fc层转换为conv层">将FC层转换为CONV层</h2>
+
+<p>值得注意的是，FC和CONV层之间的唯一区别是CONV层中的神经元仅连接到输入中的局部区域，并且CONV卷中的许多神经元共享参数。然而，两层中的神经元仍然计算点积，因此它们的功能形式是相同的。因此，事实证明，可以在FC和CONV层之间进行转换：</p>
+
+<ul>
+<li>对于任何CONV层，都有一个实现相同前向功能的FC层。权重矩阵将是大的矩阵，除了在某些块（由于本地连接）之外，其大部分为零，其中许多块中的权重相等（由于参数共享）。</li>
+
+<li><p>相反，任何FC层都可以转换为CONV层。例如，带有K的FC层= 4096这是看一些大小为7 × 7 × 512的输入音量可以等效地表示为具有F的CONV层= 7 ，P = 0 ，S= 1 ，K= 4096。换句话说，我们将滤波器大小设置为输入音量的大小，因此输出将只是1 × 1 × 4096 因为只有一个深度列“适合”输入体积，所以给出与初始FC层相同的结果。
+FC-&gt; CONV转换。在这两次转换中，将FC层转换为CONV层的能力在实践中特别有用。考虑采用224x224x3图像的ConvNet架构，然后使用一系列CONV层和POOL层将图像缩小为7x7x512的激活卷（在我们稍后将看到的AlexNet架构中，这是通过使用5个池化层，每次在空间上对输入进行下采样，使最终空间大小为224/2/2/2/2/2 = 7）。从那里开始，AlexNet使用两个大小为4096的FC层，最后使用1000个神经元来计算类别得分。我们可以将这三个FC层中的每一个转换为CONV层，如上所述：</p></li>
+
+<li><p>使用使用过滤器大小F的CONV层替换查看[7x7x512]卷的第一个FC层= 7，给出输出量[1x1x4096]。</p></li>
+
+<li><p>使用使用过滤器大小F的CONV层替换第二个FC层= 1，给出输出量[1x1x4096]</p></li>
+
+<li><p>用F替换最后的FC层= 1给出最终输出[1x1x1000]
+这些转换中的每一个实际上可以涉及操纵（例如，重新塑造）权重矩阵W.在每个FC层中进入CONV层过滤器。事实证明，这种转换使我们能够在单个前向传递中非常有效地“滑动”原始ConvNet在更大图像中的许多空间位置。</p></li>
+</ul>
+
+<p>例如，如果224x224图像给出的体积大小为[7x7x512] - 即减少32，那么通过转换的体系结构转发大小为384x384的图像将得到相等的体积[12x12x512]，因为384/32 = 12。接下来我们刚刚从FC层转换的下3个CONV层现在将给出最终的体积大小[6x6x1000]，因为（12 - 7）/ 1 + 1 = 6.注意，而不是单个分类向量大小[1x1x1000]，我们现在在384x384图像上获得整个6x6类别的分数。</p>
+
+<p><em>在32x像素的大幅度上对224x224作物的384x384图像独立地评估原始ConvNet（具有FC层）给出了转换转换后的ConvNet一次的相同结果。</em></p>
+
+<p>当然，转换转换的ConvNet一次比在所有这36个位置上迭代原始ConvNet要有效得多，因为36次评估共享计算。这种技巧通常在实践中用于获得更好的性能，例如，通常调整图像大小以使其更大，使用转换后的ConvNet来评估许多空间位置的课程分数，然后平均课程分数。</p>
+
+<p>最后，如果我们想要在图像上有效地应用原始的ConvNet但是步幅小于32像素呢？我们可以通过多次前进传球来实现这一点 例如，请注意，如果我们想要使用16像素的步幅，我们可以通过将转换后的ConvNet转发两次来收集的卷组合起来：首先是原始图像，第二个是图像，但图像在空间上移动了16个像素沿着宽度和高度。</p>
+
+<p>Net Surgery上的IPython笔记本显示了如何在代码中实现转换（使用Caffe）</p>
+
+<h1 id="convnet架构">ConvNet架构</h1>
+
+<p>我们已经看到，卷积网络通常只由三种层类型组成：CONV，POOL（除非另有说明，我们假设最大池）和FC（完全连接的短路）。我们还将RELU激活函数明确地写为一个层，它应用元素非线性。在本节中，我们将讨论如何将这些通常堆叠在一起以形成整个ConvNets。</p>
+
+<h2 id="图层模式">图层模式</h2>
+
+<p>ConvNet架构最常见的形式是堆叠一些CONV-RELU层，使用POOL层跟随它们，并重复此模式，直到图像在空间上合并为小尺寸。在某些时候，过渡到完全连接的层是很常见的。最后一个完全连接的层保存输出，例如类分数。换句话说，最常见的ConvNet架构遵循以下模式：</p>
+
+<p>INPUT -&gt; [[CONV -&gt; RELU]*N -&gt; POOL?]*M -&gt; [FC -&gt; RELU]*K -&gt; FC</p>
+
+<p>其中，*表示重复，POOL?表示可选的池化层。而且，N &gt;= 0（通常N &lt;= 3）M &gt;= 0，K &gt;= 0（和通常K &lt; 3）。例如，以下是您可能会看到的一些常见的ConvNet架构，遵循以下模式：</p>
+
+<p>INPUT -&gt; FC，实现线性分类器。在这里N = M = K = 0。
+INPUT -&gt; CONV -&gt; RELU -&gt; FC
+INPUT -&gt; [CONV -&gt; RELU -&gt; POOL]*2 -&gt; FC -&gt; RELU -&gt; FC。在这里，我们看到每个POOL层之间都有一个CONV层。
+INPUT -&gt; [CONV -&gt; RELU -&gt; CONV -&gt; RELU -&gt; POOL]*3 -&gt; [FC -&gt; RELU]*2 -&gt; FC在这里，我们看到在每个POOL层之前堆叠了两个CONV层。对于更大和更深的网络来说，这通常是个好主意，因为多个堆叠的CONV层可以在破坏性池化操作之前开发输入卷的更复杂的特征。
+优选将一叠小滤波器CONV连接到一个大的感受野CONV层。假设您将三个3x3 CONV层堆叠在一起（当然，其间具有非线性）。在这种布置中，第一CONV层上的每个神经元具有输入体积的3×3视图。第二CONV层上的神经元具有第一CONV层的3×3视图，因此通过扩展获得输入体积的5×5视图。类似地，第三CONV层上的神经元具有第二CONV层的3×3视图，因此输入体积的7×7视图。假设我们只想使用具有7x7感受野的单个CONV层而不是这三层3x3 CONV。这些神经元的输入体积的感受野大小在空间范围内是相同的（7x7），但有几个缺点。首先，神经元将在输入上计算线性函数，而三层CONV层包含非线性，使其特征更具表现力。其次，如果我们假设所有卷都有C通道，然后可以看出单个7x7 CONV层将包含C.× （7 × 7 × C）= 49 C.2参数，而三个3x3 CONV层只包含3 × （C× （3 × 3 × C））= 27 C.2参数。直观地说，使用微小的滤波器堆叠CONV层而不是使用具有大滤波器的一个CONV层允许我们表达更强大的输入特征，并且具有更少的参数。作为一个实际的缺点，如果我们计划进行反向传播，我们可能需要更多的内存来保存所有中间CONV层结果。</p>
+
+<p>最近离职。应该注意的是，最近的线性图层列表的传统范例最近在Google的Inception体系结构以及当前（最先进的）Microsoft Research Asia的残余网络中受到挑战。这两个（参见案例研究部分中的详细信息）都具有更复杂和不同的连接结构。</p>
+
+<p>在实践中：使用ImageNet上最好的方法。如果您在考虑架构决策时感到有些疲惫，您会很高兴地知道，在90％或更多的应用程序中，您不必担心这些问题。我喜欢将这一点概括为“ 不要成为英雄 ”：您应该查看目前在ImageNet上运行最佳的架构，下载预先训练的模型并对数据进行微调，而不是针对问题滚动自己的架构。您应该很少从头开始训练ConvNet或从头开始设计。我也在深度学习学校提出了这一点。</p>
+
+<h2 id="图层大小模式">图层大小模式</h2>
+
+<p>到目前为止，我们已经省略了ConvNet中每个层中使用的常见超参数的提及。我们将首先说明用于调整体系结构的常用经验法则，然后遵循规则并讨论该表示法：</p>
+
+<p>该输入层（包含图像）应该是由2分多次整除。常用数字包括32（例如CIFAR-10），64,96（例如STL-10）或224（例如，常见的ImageNet ConvNets），384和512。</p>
+
+<p>所述CONV层应该使用小的过滤器（3×3例如或至多5×5），使用的步幅小号= 1并且至关重要的是，用零填充输入体积，使得conv层不会改变输入的空间维度。也就是说，当F.= 3，然后使用P = 1将保留输入的原始大小。当F.= 5，P = 2。对于一般的F.，可以看出P = （F- 1 ）/ 2保留输入大小。如果必须使用更大的滤波器尺寸（例如7x7左右），则通常会在查看输入图像的第一个转换层上看到此情况。</p>
+
+<p>该池层是负责下采样输入的空间尺寸的。最常见的设置是使用max-pooling和2x2感受域（即F.= 2），并且步幅为2（即S.= 2）。请注意，这会丢弃输入音量中75％的激活（由于宽度和高度的下采样均为2）。另一个稍微不那么常见的设置是使用3x3接收字段，步幅为2，但这样做。看到最大池的接收字段大小大于3是非常罕见的，因为池太过于有损且具有攻击性。这通常会导致性能下降。</p>
+
+<p>减少上浆头痛。上面提出的方案是令人愉快的，因为所有CONV层都保留了它们输入的空间大小，而POOL层单独负责在空间上对卷进行下采样。在另一种方案中，我们使用大于1的步幅或者不对CONV层中的输入进行零填充，我们必须非常仔细地跟踪整个CNN架构中的输入量，并确保所有步幅和过滤器“正常工作” out“和ConvNet架构很好地对称连接。</p>
+
+<p>为什么在CONV中使用1的步幅？较小的步幅在实践中更好地发挥作用。另外，如已经提到的，步幅1允许我们将所有空间下采样留给POOL层，其中CONV层仅深度地改变输入体积。</p>
+
+<p>为什么要使用填充？除了在CONV之后保持空间大小不变的前述益处之外，这样做实际上改善了性能。如果CONV层不对输入进行零填充并且仅执行有效卷积，那么在每个CONV之后卷的大小将减少一小部分，并且边界处的信息将被“冲走”得太快。</p>
+
+<p>基于内存约束的妥协。在某些情况下（特别是在ConvNet架构的早期阶段），使用上面提到的经验法则可以非常快速地建立内存量。例如，使用三个3x3 CONV图层过滤224x224x3图像，每个图层包含64个过滤器，并且填充1将创建三个大小为[224x224x64]的激活卷。这相当于总共约1000万次激活，或72MB内存（每个图像，用于激活和渐变）。由于GPU经常受到内存的瓶颈，因此可能需要妥协。在实践中，人们更喜欢仅在网络的第一个CONV层进行折衷。例如，一个折衷方案可能是使用第一个CONV层，其过滤器大小为7x7，步幅为2（如ZF网中所示）。另一个例子是，AlexNet使用的过滤器大小为11x11，步幅为4。</p>
+
+<h2 id="实例探究">实例探究</h2>
+
+<p>卷积网络领域有几种具有名称的体系结构。最常见的是：</p>
+
+<ul>
+<li>LeNet。Convolutional Networks的首次成功应用是由Yann LeCun在1990年代开发的。其中，最着名的是用于读取邮政编码，数字等的LeNet架构。</li>
+<li>AlexNet。该推广卷积网络计算机视觉中的第一部作品是AlexNet，由Alex Krizhevsky，伊利亚Sutskever和Geoff韩丁发展。AlexNet 在2012 年提交给ImageNet ILSVRC挑战赛，并且明显优于第二名亚军（前5名误差为16％，与亚军相比，误差为26％）。该网络具有与LeNet非常相似的架构，但是更深，更大，并且特征卷积层叠在彼此之上（以前通常只有一个CONV层始终紧跟着POOL层）。</li>
+<li>ZF网。2013年ILSVRC冠军是来自Matthew Zeiler和Rob Fergus的Convolutional Network。它被称为ZFNet（Zeiler＆Fergus Net的简称）。这是对AlexNet的改进，通过调整架构超参数，特别是通过扩展中间卷积层的大小并使第一层上的步幅和滤波器尺寸更小。</li>
+<li>GoogLeNet。2014年ILSVRC获奖者是Szegedy等人的卷积网络。来自谷歌。它的主要贡献是开发了一个初始模块，该模块大大减少了网络中的参数数量（4M，与AlexNet相比，为60M）。此外，本文使用平均池而不是ConvNet顶部的完全连接层，消除了大量看起来不重要的参数。GoogLeNet还有几个后续版本，最近的版本是Inception-v4。</li>
+<li>VGGNet。ILSVRC 2014的亚军是来自Karen Simonyan和Andrew Zisserman的网络，后来被称为VGGNet。它的主要贡献在于表明网络的深度是良好性能的关键组成部分。他们最终的最佳网络包含16个CONV / FC层，并且吸引人的是，它具有极其同质的架构，从开始到结束仅执行3x3卷积和2x2池。他们的预训练模型可用于Caffe中的即插即用。VGGNet的缺点是评估和使用更多内存和参数（140M）更昂贵。大多数这些参数都在第一个完全连接的层中，因此发现这些FC层可以在没有性能降级的情况下被移除，从而显着减少了必要参数的数量。</li>
+<li>ResNet。由Kaiming He等人开发的剩余网络。是ILSVRC 2015的获胜者。它具有特殊的跳过连接和大量使用批量标准化。该体系结构还缺少网络末端的完全连接层。读者还可以参考凯明的演示文稿（视频，幻灯片），以及最近在火炬中重现这些网络的一些实验。ResNets目前是迄今为止最先进的卷积神经网络模型，是在实践中使用ConvNets的默认选择（截至2016年5月10日）。特别是，还可以看到更新的调整原始架构的最新进展Kaiming He等。深度剩余网络中的身份映射（2016年3月发布）。
+VGGNet详细介绍。作为案例研究，让我们更详细地分析VGGNet。整个VGGNet由CONV层组成，它们用步幅1和垫1执行3x3卷积，POOL层执行2x2最大池，步长为2（并且没有填充）。我们可以在处理的每一步写出表示的大小，并跟踪表示大小和权重总数：</li>
+</ul>
+
+<p>`INPUT: [224x224x3]        memory:  224*224*3=150K   weights: 0
+CONV3-64: [224x224x64]  memory:  224*224*64=3.2M   weights: (3*3*3)*64 = 1,728
+CONV3-64: [224x224x64]  memory:  224*224*64=3.2M   weights: (3*3*64)*64 = 36,864
+POOL2: [112x112x64]  memory:  112*112*64=800K   weights: 0
+CONV3-128: [112x112x128]  memory:  112*112*128=1.6M   weights: (3*3*64)*128 = 73,728
+CONV3-128: [112x112x128]  memory:  112*112*128=1.6M   weights: (3*3*128)*128 = 147,456
+POOL2: [56x56x128]  memory:  56*56*128=400K   weights: 0
+CONV3-256: [56x56x256]  memory:  56*56*256=800K   weights: (3*3*128)*256 = 294,912
+CONV3-256: [56x56x256]  memory:  56*56*256=800K   weights: (3*3*256)*256 = 589,824
+CONV3-256: [56x56x256]  memory:  56*56*256=800K   weights: (3*3*256)*256 = 589,824
+POOL2: [28x28x256]  memory:  28*28*256=200K   weights: 0
+CONV3-512: [28x28x512]  memory:  28*28*512=400K   weights: (3*3*256)*512 = 1,179,648
+CONV3-512: [28x28x512]  memory:  28*28*512=400K   weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [28x28x512]  memory:  28*28*512=400K   weights: (3*3*512)*512 = 2,359,296
+POOL2: [14x14x512]  memory:  14*14*512=100K   weights: 0
+CONV3-512: [14x14x512]  memory:  14*14*512=100K   weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [14x14x512]  memory:  14*14*512=100K   weights: (3*3*512)*512 = 2,359,296
+CONV3-512: [14x14x512]  memory:  14*14*512=100K   weights: (3*3*512)*512 = 2,359,296
+POOL2: [7x7x512]  memory:  7*7*512=25K  weights: 0
+FC: [1x1x4096]  memory:  4096  weights: 7*7*512*4096 = 102,760,448
+FC: [1x1x4096]  memory:  4096  weights: 4096*4096 = 16,777,216
+FC: [1x1x1000]  memory:  1000 weights: 4096*1000 = 4,096,000</p>
+
+<p>TOTAL memory: 24M * 4 bytes ~= 93MB / image (only forward! ~*2 for bwd)
+TOTAL params: 138M parameters`
+与Convolutional Networks一样，请注意大多数内存（以及计算时间）都用在早期的CONV层中，并且大多数参数都在最后的FC层中。在这种特殊情况下，第一个FC层包含100M权重，总共140M。</p>
+
+<h2 id="计算考虑因素">计算考虑因素</h2>
+
+<p>构建ConvNet架构时要注意的最大瓶颈是内存瓶颈。许多现代GPU的内存限制为3/4 / 6GB，最好的GPU具有大约12GB的内存。有三种主要的内存来源可以跟踪：</p>
+
+<ul>
+<li>从中间体积大小：这些是ConvNet每层激活的原始数量，以及它们的渐变（相同大小）。通常，大多数激活都在ConvNet的早期层（即第一个Conv层）上。这些都被保留，因为它们是反向传播所需要的，但是只有在测试时运行ConvNet的聪明实现原则上可以通过仅将当前激活存储在任何层并丢弃以下层上的先前激活来大幅减少这一点。 。</li>
+<li>从参数大小：这些是保存网络参数的数字，它们在反向传播期间的渐变，如果优化使用动量，Adagrad或RMSProp，通常还包括步长缓存。因此，单独存储参数向量的存储器通常必须乘以至少3左右的因子。</li>
+<li>每个ConvNet实现都必须维护各种内存，例如图像数据批量，可能是它们的增强版本等。
+一旦粗略估计了值的总数（对于激活，渐变和misc），该数字应转换为以GB为单位的大小。获取值的数量，乘以4得到原始字节数（因为每个浮点数为4个字节，或者双精度可能为8），然后除以1024多次以获得以KB为单位的内存量， MB，最后是GB。如果您的网络不适合，“使其适合”的常见启发式方法是减小批量大小，因为大多数内存通常由激活消耗。</li>
+</ul>
+
+<h1 id="其他资源">其他资源</h1>
+
+<p>与实施有关的其他资源：</p>
+
+<ul>
+<li>CONM性能的Soumith基准</li>
+<li>ConvNetJS CIFAR-10演示允许您使用ConvNet架构并在浏览器中实时查看结果和计算。</li>
+<li>Caffe，受欢迎的ConvNet库之一。</li>
+<li>Torch7中最先进的ResNets</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jeff Liu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2019-01-12</span>
+  </p>
+  
+  
+</div><div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/wechat-1.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/alipay-1.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/cnn/">CNN</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/nn/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">神经网络简介[zz]</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'liu2590-github-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:liu2590@purdue.edu" class="iconfont icon-email" title="email"></a>
+      <a href="liu2590@purdue.edu" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="liu2590" class="iconfont icon-github" title="github"></a>
+  <a href="http://liu2590.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jeff Liu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132979174-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>hugo安装和github pages配置 - Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jeff Liu" /><meta name="description" content="Hugo是一种通用的静态网站生成器。静态网站则不需要在收到请求后生成页面，而是在整个网站建立起之前就将所有的页面全部生成，访问时直接返回现成" /><meta name="keywords" content="Python, ML, DL" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://liu2590.github.io/post/hugol1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="hugo安装和github pages配置" />
+<meta property="og:description" content="Hugo是一种通用的静态网站生成器。静态网站则不需要在收到请求后生成页面，而是在整个网站建立起之前就将所有的页面全部生成，访问时直接返回现成" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liu2590.github.io/post/hugol1/" /><meta property="article:published_time" content="2019-01-22T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-22T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="hugo安装和github pages配置">
+<meta itemprop="description" content="Hugo是一种通用的静态网站生成器。静态网站则不需要在收到请求后生成页面，而是在整个网站建立起之前就将所有的页面全部生成，访问时直接返回现成">
+
+
+<meta itemprop="datePublished" content="2019-01-22T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-22T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1284">
+
+
+
+<meta itemprop="keywords" content="hugo," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="hugo安装和github pages配置"/>
+<meta name="twitter:description" content="Hugo是一种通用的静态网站生成器。静态网站则不需要在收到请求后生成页面，而是在整个网站建立起之前就将所有的页面全部生成，访问时直接返回现成"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jeff Liu</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home ·</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives ·</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags ·</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories ·</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+
+<div class="logo-wrapper" style="background:  url('logo.ico') no-repeat;background-size: 60% 100%; " >
+
+  <a href="/" class="logo" >Jeff Liu</a>
+</div>
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">hugo安装和github pages配置</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-22 </span>
+        
+          <span class="more-meta"> 约 1284 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#安装hugo">安装hugo</a>
+<ul>
+<li><a href="#windows安装">Windows安装</a></li>
+<li><a href="#安装主题">安装主题</a></li>
+<li><a href="#开始写文章">开始写文章</a></li>
+<li><a href="#运行看渲染效果">运行看渲染效果</a></li>
+<li><a href="#其他命令">其他命令</a></li>
+</ul></li>
+<li><a href="#利用github进行托管">利用github进行托管</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><img src="Hugo_logo.png" alt="" /></p>
+
+<p>Hugo是一种通用的静态网站生成器。静态网站则不需要在收到请求后生成页面，而是在整个网站建立起之前就将所有的页面全部生成，访问时直接返回现成的静态页面，不需要数据库的参与。维护简单，不用担心安全性的问题, 访问快速。因此，一旦网站有任何更改，需要重新生成所有的与更改相关的页面。</p>
+
+<h1 id="安装hugo">安装hugo</h1>
+
+<h2 id="windows安装">Windows安装</h2>
+
+<p>极简安装，只需要安装git，不安装Chocolatey等。</p>
+
+<ul>
+<li><a href="https://github.com/gohugoio/hugo/releases">https://github.com/gohugoio/hugo/releases</a> 下载需要的windows版本</li>
+<li>解压，新建文件夹hugo（任何名称都可以）</li>
+<li>将hugo.exe文件copy到新建文件夹hugo下</li>
+<li>用windows自带的powershell打开到该文件夹</li>
+<li>./hugo new site mysite 生成静态博客（不要忘记./因为我们没有设置环境变量所以需要地址）</li>
+</ul>
+
+<!--
+[首先安装Chocolatey](https://chocolatey.org/)
+
+> cmd.exe中安装命令：
+
+```
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+```
+> PowerShell中安装命令：
+
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+
+> 安装hugo
+```
+choco install hugo -confirm
+```
+
+## 生成静态博客
+```
+hugo new site /path/mysite
+cd /path/mysite
+```
+-->
+
+<h2 id="安装主题">安装主题</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ cd mysite
+$ cd themes
+$ git clone https://github.com/lgaida/mediumish-gohugo-theme</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>官网 <a href="https://themes.gohugo.io/">https://themes.gohugo.io/</a> 下载主题文件copy到themes文件夹下即可，有的主题文件下有exampleSite文件夹，将其中内容copy到mysite文件夹下，覆盖即可完成该主题设置，如果没有就需要手动设置config.toml配置文件。</li>
+</ul>
+
+<h2 id="开始写文章">开始写文章</h2>
+
+<ul>
+<li>退回到mysite文件夹，这次是../两个点哦。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">../hugo new /post/first.md</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>first.md为markdown规范，比如插入图片命令：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">![提示文字](pic.jpg)</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>该图片可以放在与first.md 文件同目录下的first文件夹内。</li>
+</ul>
+
+<h2 id="运行看渲染效果">运行看渲染效果</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">../hugo server</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><a href="http://127.0.0.1:1313/">点击访问</a>可以看到博客效果。</li>
+</ul>
+
+<h2 id="其他命令">其他命令</h2>
+
+<blockquote>
+<p>&ndash;theme=mediumish-gohugo-theme 用其他主题渲染，-D生成静态网页资源</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">../hugo server --theme=mediumish-gohugo-theme -D</pre></td></tr></table>
+</div>
+</div>
+<h1 id="利用github进行托管">利用github进行托管</h1>
+
+<ul>
+<li>github账号注册 username</li>
+<li>新建repository，命名为username.github.io，注意刚注册的相同。</li>
+<li>下载<a href="https://git-scm.com/download/win">git</a></li>
+<li>打开gitbath（文件夹右键），按照提示输入，基本上就是回车。生成的秘钥id_rsa.pub用文本工具打开copy。
+<code>
+ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;
+</code></li>
+
+<li><p>在github页面的右上角，单击您的个人资料照片，然后单击“设置”。在用户设置侧栏中，单击SSH和GPG密钥。将密钥粘贴到“密钥”字段中。单击“ 添加SSH密钥”。如果出现提示，请确认您的GitHub密码。</p></li>
+
+<li><p>登录github账户，直接创建分支username.github.io
+username为github的用户名，不需要初始化</p></li>
+
+<li><p>进入本地的blog主目录
+cd /path/mysite，配置博客,把<code>baseurl</code>的值设置为 <a href="http://username.github.io/">http://username.github.io/</a> ，保存
+config.toml</p></li>
+
+<li><p>如需添加评论留言例如disqus，先注册，再修改config.toml中disqusShortname即可，注意是shortname不是注册号。</p></li>
+
+<li><p>重新生成静态博客，生成的内容在public文件夹下。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">../hugo -D</pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>上传public内的文件到username.github.io项目，注意替换username， 出现重复可以先删除 git remote rm origin</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">cd public
+git init
+git add .
+git commit -m &#39;myblog&#39;
+git remote add origin git@github.com:username/username.github.io.git
+git push -u origin master</pre></td></tr></table>
+</div>
+</div>
+<p>到这里，博客在github上的托管全部完成，等一小会，就可以用：<a href="http://username.github.io">http://username.github.io</a> 来访问你的博客了。</p></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jeff Liu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2019-01-22</span>
+  </p>
+  
+  
+</div><div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/wechat-1.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/alipay-1.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/hugo/">hugo</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/purdue2transfer/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Purdue机器学习入门（二）迁移学习</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/latex/">
+            <span class="next-text nav-default">LaTex公式</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'liu2590-github-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:liu2590@purdue.edu" class="iconfont icon-email" title="email"></a>
+      <a href="liu2590@purdue.edu" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="liu2590" class="iconfont icon-github" title="github"></a>
+  <a href="http://liu2590.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jeff Liu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132979174-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DL on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+    <link>http://liu2590.github.io/tags/dl/</link>
+    <description>Recent content in DL on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 01 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://liu2590.github.io/tags/dl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Purdue机器学习入门（五）图像探测</title>
+      <link>http://liu2590.github.io/post/purdue5detect/</link>
+      <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue5detect/</guid>
+      <description>图像探测与分割 这部分是我此次学习的初衷，在见识了人工智能中深度学习的强大后，开始思考它们在哪里能够应用。以下图片均来自于 github。 图像探</description>
+    </item>
+    
+    <item>
+      <title>Purdue机器学习入门（四）画风迁移</title>
+      <link>http://liu2590.github.io/post/purdue4style/</link>
+      <pubDate>Fri, 08 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue4style/</guid>
+      <description>Author: Alexis Jacq Edited by: Winston Herring 基本原则（Underlying Principle） 定义两个距离，一个用于内容（$ D_C $），一个用于样式$ D_S $）。 $ D_C $测量两个图</description>
+    </item>
+    
+  </channel>
+</rss>

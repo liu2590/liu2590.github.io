@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>os on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+    <link>http://liu2590.github.io/categories/os/</link>
+    <description>Recent content in os on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 29 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://liu2590.github.io/categories/os/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ubuntu的USB安装盘制作</title>
+      <link>http://liu2590.github.io/post/ubuntu/</link>
+      <pubDate>Tue, 29 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/ubuntu/</guid>
+      <description>需要： 一个4GB或更大的USB盘 Microsoft Windows XP或更高版本 Rufus，一款免费的开源USB工具 一个Ubuntu ISO文件 USB选择 执行以下操作在Ru</description>
+    </item>
+    
+  </channel>
+</rss>

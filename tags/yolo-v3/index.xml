@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>YOLO V3 on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+    <link>http://liu2590.github.io/tags/yolo-v3/</link>
+    <description>Recent content in YOLO V3 on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 21 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://liu2590.github.io/tags/yolo-v3/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Purdue机器学习入门（六）yolo v3进行物体探测之训练自己的数据</title>
+      <link>http://liu2590.github.io/post/purdue6yolov3/</link>
+      <pubDate>Thu, 21 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/post/purdue6yolov3/</guid>
+      <description>yolov3 训练自己的数据集 历时6个月，从零开始学习深度学习，第一个小目标是实现物体探测，在经历过多个坑后，今天终于实现了。记录一下过程。 1 先放最后的</description>
+    </item>
+    
+  </channel>
+</rss>

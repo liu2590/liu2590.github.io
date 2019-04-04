@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Purdue机器学习入门（五）图像探测 - Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jeff Liu" /><meta name="description" content="图像探测与分割 这部分是我此次学习的初衷，在见识了人工智能中深度学习的强大后，开始思考它们在哪里能够应用。以下图片均来自于 github。 图像探" /><meta name="keywords" content="Python, ML, DL" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://liu2590.github.io/post/purdue5detect/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Purdue机器学习入门（五）图像探测" />
+<meta property="og:description" content="图像探测与分割 这部分是我此次学习的初衷，在见识了人工智能中深度学习的强大后，开始思考它们在哪里能够应用。以下图片均来自于 github。 图像探" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liu2590.github.io/post/purdue5detect/" /><meta property="article:published_time" content="2019-03-01T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-03-01T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Purdue机器学习入门（五）图像探测">
+<meta itemprop="description" content="图像探测与分割 这部分是我此次学习的初衷，在见识了人工智能中深度学习的强大后，开始思考它们在哪里能够应用。以下图片均来自于 github。 图像探">
+
+
+<meta itemprop="datePublished" content="2019-03-01T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-03-01T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2818">
+
+
+
+<meta itemprop="keywords" content="DL," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Purdue机器学习入门（五）图像探测"/>
+<meta name="twitter:description" content="图像探测与分割 这部分是我此次学习的初衷，在见识了人工智能中深度学习的强大后，开始思考它们在哪里能够应用。以下图片均来自于 github。 图像探"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jeff Liu</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home ·</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives ·</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags ·</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories ·</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+
+<div class="logo-wrapper" style="background:  url('logo.ico') no-repeat;background-size: 60% 100%; " >
+
+  <a href="/" class="logo" >Jeff Liu</a>
+</div>
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Purdue机器学习入门（五）图像探测</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-03-01 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"> 深度学习 </a>
+            <a href="/categories/purdue%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/"> Purdue机器学习入门 </a>
+            </div>
+          <span class="more-meta"> 约 2818 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#图像探测与分割">图像探测与分割</a></li>
+<li><a href="#图像探测与分割-1">图像探测与分割</a>
+<ul>
+<li><a href="#原理">原理</a>
+<ul>
+<li><a href="#流行的图像识别算法">流行的图像识别算法</a>
+<ul>
+<li><a href="#m-rcnn">M-RCNN</a></li>
+<li><a href="#ssd">SSD</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#6-登录tensorboard">6.登录TensorBoard</a></li>
+<li><a href="#6-将不同的部分组合成最终结果">6.将不同的部分组合成最终结果</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><img src="purdue.jpg" alt="png" /></p>
+
+<h1 id="图像探测与分割">图像探测与分割</h1>
+
+<blockquote>
+<p>这部分是我此次学习的初衷，在见识了人工智能中深度学习的强大后，开始思考它们在哪里能够应用。以下图片均来自于 github。</p>
+</blockquote>
+
+<h1 id="图像探测与分割-1">图像探测与分割</h1>
+
+<p>如图所示，就是探测图像中存在什么内容，将其识别并标记出其区域。</p>
+
+<p><img src="detection_refinement.png" alt="图像探测与分割" /></p>
+
+<h2 id="原理">原理</h2>
+
+<p>如何用前几天学的内容做到呢？</p>
+
+<h3 id="流行的图像识别算法">流行的图像识别算法</h3>
+
+<p>目标探测主流的算法分为两个类型：（1）提取获取关键部位（region proposal），然后对这些部位进行分类与回归，如R-CNN算法；（2）均匀的密集采样，如Yolo和SSD，主要是均匀地在图片的不同位置进行密集抽样，采用不同尺度和长宽比，利用CNN提取特征后进行分类与回归，速度快，但是训练数据量大且不均衡。算法的准确度和速度性能如图所示。</p>
+
+<p>[](ssd_eccv2016_slide.pdf)</p>
+
+<p><img src="detect.png" alt="" /></p>
+
+<p>事实上，上述分类稍微有些过时了，下面是新一点的算法介绍（到2017年底）</p>
+
+<ul>
+<li>SSD  - “SSD：Single Shot MultiBox Detector”（2016）[arXiv：1512.02325]（<a href="https://arxiv.org/abs/1512.02325），[github]（https://github.com/weiliu89/caffe/tree">https://arxiv.org/abs/1512.02325），[github]（https://github.com/weiliu89/caffe/tree</a> / SSD）</li>
+<li>DSSD  - “DSSD：Deconvolutional Single Shot Detector”（2017）[arXiv：1701.06659]（<a href="https://arxiv.org/abs/1701.06659）">https://arxiv.org/abs/1701.06659）</a></li>
+<li>RRC  - “使用循环滚动卷积的精确单级检测器”（2017）[arXiv：1704.05776]（<a href="https://arxiv.org/abs/1704.05776），[github]（https://github.com/xiaohaoChen/rrc_detection">https://arxiv.org/abs/1704.05776），[github]（https://github.com/xiaohaoChen/rrc_detection</a> ）</li>
+<li>RUN  - “用于单级检测的剩余特征和统一预测网络”（2017）[arXiv：1707.05031]（<a href="https://arxiv.org/abs/1707.05031）">https://arxiv.org/abs/1707.05031）</a></li>
+<li>DSOD  - “DSOD：从Scratch学习深度监督的物体探测器”（2017）[arXiv：1708.01241]（<a href="https://arxiv.org/abs/1708.01241），[github]（https://github.com/szq0214/">https://arxiv.org/abs/1708.01241），[github]（https://github.com/szq0214/</a> DSOD）</li>
+<li>BlitzNet  - “BlitzNet：用于场景理解的实时深度网络”（2017）[arXiv：1708.02813]（<a href="https://arxiv.org/abs/1708.02813），[github]（https://github.com/">https://arxiv.org/abs/1708.02813），[github]（https://github.com/</a> dvornikita / blitznet）</li>
+<li>RefineDet  - “用于物体检测的单次细化神经网络”（2017）[arXiv：1711.06897]（<a href="https://arxiv.org/abs/1711.06897），[github]（https://github.com/sfzhang15/">https://arxiv.org/abs/1711.06897），[github]（https://github.com/sfzhang15/</a> RefineDet）</li>
+<li>DRBox  - “使用可旋转边界框学习旋转不变检测器”（2017）[arXiv：1711.09405]（<a href="https://arxiv.org/abs/1711.09405），[github]（https://github.com/liulei01/">https://arxiv.org/abs/1711.09405），[github]（https://github.com/liulei01/</a> DRBox）</li>
+<li>Frustum PointNets  - “用于从RGB-D数据进行3D物体检测的Frustum PointNets”（2017）[arXiv：1711.08488]（<a href="https://arxiv.org/abs/1711.08488）">https://arxiv.org/abs/1711.08488）</a></li>
+</ul>
+
+<h4 id="m-rcnn">M-RCNN</h4>
+
+<ul>
+<li>1.锚定</li>
+</ul>
+
+<p>框出特征区域</p>
+
+<p><img src="detection_anchors.png" alt="" /></p>
+
+<ul>
+<li>2.提取</li>
+</ul>
+
+<p>细化提取</p>
+
+<p><img src="detection_refinement.png" alt="" /></p>
+
+<ul>
+<li>3.musk生成</li>
+</ul>
+
+<p>生成的掩码并将它们缩放在正确位置的图像上。</p>
+
+<p><img src="detection_masks.png" alt="" /></p>
+
+<ul>
+<li>4.Layer激活</li>
+</ul>
+
+<p><img src="detection_activations.png" alt="" /></p>
+
+<ul>
+<li>5.权重直方图</li>
+</ul>
+
+<p><img src="detection_histograms.png" alt="" /></p>
+
+<h4 id="ssd">SSD</h4>
+
+<ul>
+<li>输入图片到网络，生成一系列feature map</li>
+<li>在此基础上生成 box，然后将这些 box回归到正确的位置上（一次前向传播就可以完成）。</li>
+<li>输入 W×H 的feature map，生成均匀分布的 W×H 个box中心，每个中心上，生成多个不同长宽比的 box，如[<sup>1</sup>&frasl;<sub>3</sub>, <sup>1</sup>&frasl;<sub>2</sub>, 1, 2,3]。一个feature map上可以生成的 box总数是 W×H×不同长宽比数量。</li>
+</ul>
+
+<p>这是在Python 3，Keras和TensorFlow上实现<a href="https://arxiv.org/abs/1703.06870">Mask R-CNN</a>。该模型为图像中对象的每个实例生成边界框和分割蒙版。它基于特征金字塔网络(FPN)和ResNet101骨干网。</p>
+
+<p><img src="assets / street.png" alt="实例分割示例" /></p>
+
+<p>存储库包括：
+*基于FPN和ResNet101构建的Mask R-CNN的源代码。
+* MS COCO的培训代码
+* MS COCO的预训练重量
+* Jupyter笔记本可以在每一步都可视化检测管道
+*用于多GPU培训的ParallelModel类
+*评估MS COCO指标(AP)
+*您自己的数据集培训示例</p>
+
+<p>代码记录在案，设计易于扩展。如果您在研究中使用它，请考虑引用此存储库(下面的bibtex)。如果您从事3D视觉工作，您可能会发现我们最近发布的<a href="https://matterport.com/blog/2017/09/20/announcing-matterport3d-research-dataset/">Matterport3D</a>数据集也很有用。
+该数据集是由我们的客户捕获的3D重建空间创建的，这些客户同意将其公开用于学术用途。您可以在<a href="https://matterport.com/gallery/">此处</a>查看更多示例。</p>
+
+<p>＃ 入门
+* <a href="samples / demo.ipynb">demo.ipynb</a>是最简单的开始方式。它显示了使用在MS COCO上预训练的模型来分割您自己图像中的对象的示例。
+它包括在任意图像上运行对象检测和实例分割的代码。</p>
+
+<ul>
+<li><a href="samples / shapes / train_shapes.ipynb">train_shapes.ipynb</a>显示了如何在您自己的数据集上训练Mask R-CNN。本笔记本介绍了一个玩具数据集(形状)，以演示对新数据集的培训。</li>
+</ul>
+
+<p>*(<a href="mrcnn / model.py">model.py</a>，<a href="mrcnn / utils.py">utils.py</a>，<a href="mrcnn / config.py">config.py</a>)：这些文件包含主屏蔽RCNN实现。</p>
+
+<ul>
+<li><p><a href="samples / coco / inspect_data.ipynb">inspect_data.ipynb</a>。这款笔记本可视化不同的预处理步骤
+准备培训数据。</p></li>
+
+<li><p><a href="samples / coco / inspect_model.ipynb">inspect_model.ipynb</a>本笔记本深入探讨了检测和分割对象的步骤。它提供了管道每个步骤的可视化。</p></li>
+
+<li><p><a href="samples / coco / inspect_weights.ipynb">inspect_weights.ipynb</a>
+这个笔记本检查训练模型的权重，并寻找异常和奇怪的模式。</p></li>
+</ul>
+
+<p>＃逐步检测
+为了帮助调试和理解模型，有3个笔记本
+(<a href="samples / coco / inspect_data.ipynb">inspect_data.ipynb</a>，<a href="samples / coco / inspect_model.ipynb">inspect_model.ipynb</a>，
+<a href="samples / coco / inspect_weights.ipynb">inspect_weights.ipynb</a>)提供了大量可视化，并允许逐步运行模型以检查每个点的输出。这里有一些例子：</p>
+
+<h2 id="6-登录tensorboard">6.登录TensorBoard</h2>
+
+<p>TensorBoard是另一个很棒的调试和可视化工具。该模型配置为记录损失并在每个时期结束时保存权重。</p>
+
+<p><img src="detection_tensorboard.png" alt="" /></p>
+
+<h2 id="6-将不同的部分组合成最终结果">6.将不同的部分组合成最终结果</h2>
+
+<p><img src="detection_final.png" alt="" /></p>
+
+<p>#MS COCO培训
+我们为MS COCO提供预先训练的砝码，使其更容易入手。您可以
+使用这些权重作为起点来训练您自己在网络上的变化。
+培训和评估代码在<code>samples / coco / coco.py</code>中。你可以导入它
+Jupyter笔记本中的模块(请参阅提供的笔记本示例)或您
+可以直接从命令行运行它：</p>
+
+<p>```
+＃从预先训练的COCO重量开始训练新模型
+python3 samples / coco / coco.py train &ndash;dataset = / path / to / coco / &ndash;model = coco</p>
+
+<p>＃从ImageNet权重开始训练一个新模型
+python3 samples / coco / coco.py train &ndash;dataset = / path / to / coco / &ndash;model = imagenet</p>
+
+<p>＃继续训练您之前训练过的模型
+python3 samples / coco / coco.py train &ndash;dataset = / path / to / coco / &ndash;model = / path / to / weights.h5</p>
+
+<p>＃继续训练您训练的最后一个模型。这会找到
+＃模型目录中最后训练的权重。
+python3 samples / coco / coc</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jeff Liu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2019-03-01</span>
+  </p>
+  
+  
+</div><div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/wechat-1.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/alipay-1.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/dl/">DL</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/purdue6yolov3/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Purdue机器学习入门（六）yolo v3进行物体探测之训练自己的数据</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/purdue4style/">
+            <span class="next-text nav-default">Purdue机器学习入门（四）画风迁移</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'liu2590-github-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:liu2590@purdue.edu" class="iconfont icon-email" title="email"></a>
+      <a href="liu2590@purdue.edu" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="liu2590" class="iconfont icon-github" title="github"></a>
+  <a href="http://liu2590.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jeff Liu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132979174-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

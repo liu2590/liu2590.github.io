@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+    <link>http://liu2590.github.io/tags/</link>
+    <description>Recent content in Tags on Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 12 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://liu2590.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CNN</title>
+      <link>http://liu2590.github.io/tags/cnn/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/tags/cnn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>COCO</title>
+      <link>http://liu2590.github.io/tags/coco/</link>
+      <pubDate>Wed, 30 Jan 2019 23:59:59 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/tags/coco/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DL</title>
+      <link>http://liu2590.github.io/tags/dl/</link>
+      <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/tags/dl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>LaTex</title>
+      <link>http://liu2590.github.io/tags/latex/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/tags/latex/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NN</title>
+      <link>http://liu2590.github.io/tags/nn/</link>
+      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/tags/nn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>YOLO V3</title>
+      <link>http://liu2590.github.io/tags/yolo-v3/</link>
+      <pubDate>Thu, 21 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/tags/yolo-v3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>http://liu2590.github.io/tags/hugo/</link>
+      <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>transfer</title>
+      <link>http://liu2590.github.io/tags/transfer/</link>
+      <pubDate>Tue, 29 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://liu2590.github.io/tags/transfer/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

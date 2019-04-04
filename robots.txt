@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: http://liu2590.github.io/sitemap.xml

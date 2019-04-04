@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Purdue机器学习入门（三）COCO数据集导入 - Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jeff Liu" /><meta name="description" content="1 2 3 4 5 6 7 8 9 10 %matplotlib inline from pycocotools.coco import COCO import numpy as np import skimage.io as io import matplotlib.pyplot as plt import pylab # pylab.rcParams[&amp;#39;figure.figsize&amp;#39;] = (8.0, 10.0) plt.rcParams[&amp;#39;font.sans-serif&amp;#39;] = [u&amp;#39;SimHei&amp;#39;] plt.rcParams[&amp;#39;axes.unicode_minus&amp;#39;] = False 1 2 3 dataDir=&amp;#39;D:/ML/data/coco&amp;#39; dataType=&amp;#39;val2017&amp;#39; annFile=&amp;#39;{}/annotations/instances_{}.json&amp;#39;.format(dataDir,dataType) 1 2 # 导入数据库 coco=COCO(annFile) 1 2 3 4 loading annotations into memory... Done (t=1.04s) creating index... index created!" /><meta name="keywords" content="Python, ML, DL" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://liu2590.github.io/post/pycocodemo/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Purdue机器学习入门（三）COCO数据集导入" />
+<meta property="og:description" content="1 2 3 4 5 6 7 8 9 10 %matplotlib inline from pycocotools.coco import COCO import numpy as np import skimage.io as io import matplotlib.pyplot as plt import pylab # pylab.rcParams[&#39;figure.figsize&#39;] = (8.0, 10.0) plt.rcParams[&#39;font.sans-serif&#39;] = [u&#39;SimHei&#39;] plt.rcParams[&#39;axes.unicode_minus&#39;] = False 1 2 3 dataDir=&#39;D:/ML/data/coco&#39; dataType=&#39;val2017&#39; annFile=&#39;{}/annotations/instances_{}.json&#39;.format(dataDir,dataType) 1 2 # 导入数据库 coco=COCO(annFile) 1 2 3 4 loading annotations into memory... Done (t=1.04s) creating index... index created!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liu2590.github.io/post/pycocodemo/" /><meta property="article:published_time" content="2019-01-30T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-30T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Purdue机器学习入门（三）COCO数据集导入">
+<meta itemprop="description" content="1 2 3 4 5 6 7 8 9 10 %matplotlib inline from pycocotools.coco import COCO import numpy as np import skimage.io as io import matplotlib.pyplot as plt import pylab # pylab.rcParams[&#39;figure.figsize&#39;] = (8.0, 10.0) plt.rcParams[&#39;font.sans-serif&#39;] = [u&#39;SimHei&#39;] plt.rcParams[&#39;axes.unicode_minus&#39;] = False 1 2 3 dataDir=&#39;D:/ML/data/coco&#39; dataType=&#39;val2017&#39; annFile=&#39;{}/annotations/instances_{}.json&#39;.format(dataDir,dataType) 1 2 # 导入数据库 coco=COCO(annFile) 1 2 3 4 loading annotations into memory... Done (t=1.04s) creating index... index created!">
+
+
+<meta itemprop="datePublished" content="2019-01-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-30T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="733">
+
+
+
+<meta itemprop="keywords" content="COCO," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Purdue机器学习入门（三）COCO数据集导入"/>
+<meta name="twitter:description" content="1 2 3 4 5 6 7 8 9 10 %matplotlib inline from pycocotools.coco import COCO import numpy as np import skimage.io as io import matplotlib.pyplot as plt import pylab # pylab.rcParams[&#39;figure.figsize&#39;] = (8.0, 10.0) plt.rcParams[&#39;font.sans-serif&#39;] = [u&#39;SimHei&#39;] plt.rcParams[&#39;axes.unicode_minus&#39;] = False 1 2 3 dataDir=&#39;D:/ML/data/coco&#39; dataType=&#39;val2017&#39; annFile=&#39;{}/annotations/instances_{}.json&#39;.format(dataDir,dataType) 1 2 # 导入数据库 coco=COCO(annFile) 1 2 3 4 loading annotations into memory... Done (t=1.04s) creating index... index created!"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jeff Liu</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home ·</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives ·</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags ·</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories ·</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+
+<div class="logo-wrapper" style="background:  url('logo.ico') no-repeat;background-size: 60% 100%; " >
+
+  <a href="/" class="logo" >Jeff Liu</a>
+</div>
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Purdue机器学习入门（三）COCO数据集导入</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-30 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"> 深度学习 </a>
+            </div>
+          <span class="more-meta"> 约 733 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="purdue.jpg" alt="mnist" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">pycocotools.coco</span> <span class="kn">import</span> <span class="n">COCO</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">skimage.io</span> <span class="kn">as</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pylab</span>
+<span class="c1"># pylab.rcParams[&#39;figure.figsize&#39;] = (8.0, 10.0)</span>
+  
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.sans-serif&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;SimHei&#39;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.unicode_minus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">dataDir</span><span class="o">=</span><span class="s1">&#39;D:/ML/data/coco&#39;</span>
+<span class="n">dataType</span><span class="o">=</span><span class="s1">&#39;val2017&#39;</span>
+<span class="n">annFile</span><span class="o">=</span><span class="s1">&#39;{}/annotations/instances_{}.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataDir</span><span class="p">,</span><span class="n">dataType</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 导入数据库</span>
+<span class="n">coco</span><span class="o">=</span><span class="n">COCO</span><span class="p">(</span><span class="n">annFile</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">loading annotations into memory...
+Done (t=1.04s)
+creating index...
+index created!</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 显示数据集全部分类及super分类</span>
+<span class="n">cats</span> <span class="o">=</span> <span class="n">coco</span><span class="o">.</span><span class="n">loadCats</span><span class="p">(</span><span class="n">coco</span><span class="o">.</span><span class="n">getCatIds</span><span class="p">())</span>
+<span class="n">nms</span><span class="o">=</span><span class="p">[</span><span class="n">cat</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">cats</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;COCO categories: </span><span class="se">\n</span><span class="s1">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nms</span><span class="p">)))</span>
+
+<span class="n">nms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">cat</span><span class="p">[</span><span class="s1">&#39;supercategory&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">cats</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;COCO supercategories: </span><span class="se">\n</span><span class="s1">{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nms</span><span class="p">)))</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">COCO categories: 
+person bicycle car motorcycle airplane bus train truck boat traffic light fire hydrant stop sign parking meter bench bird cat dog horse sheep cow elephant bear zebra giraffe backpack umbrella handbag tie suitcase frisbee skis snowboard sports ball kite baseball bat baseball glove skateboard surfboard tennis racket bottle wine glass cup fork knife spoon bowl banana apple sandwich orange broccoli carrot hot dog pizza donut cake chair couch potted plant bed dining table toilet tv laptop mouse remote keyboard cell phone microwave oven toaster sink refrigerator book clock vase scissors teddy bear hair drier toothbrush
+
+COCO supercategories: 
+indoor electronic vehicle person outdoor kitchen sports accessory food appliance furniture animal</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 从满足特征标签的数据中随机选一个</span>
+<span class="n">catIds</span> <span class="o">=</span> <span class="n">coco</span><span class="o">.</span><span class="n">getCatIds</span><span class="p">(</span><span class="n">catNms</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;person&#39;</span><span class="p">,</span><span class="s1">&#39;bed&#39;</span><span class="p">,</span><span class="s1">&#39;ball&#39;</span><span class="p">]);</span>
+<span class="k">print</span><span class="p">(</span><span class="n">catIds</span><span class="p">)</span>   <span class="c1"># [1, 18, 41]</span>
+<span class="n">imgIds</span> <span class="o">=</span> <span class="n">coco</span><span class="o">.</span><span class="n">getImgIds</span><span class="p">(</span><span class="n">catIds</span><span class="o">=</span><span class="n">catIds</span> <span class="p">);</span>
+<span class="c1"># imgIds = coco.getImgIds(imgIds = [324158])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">imgIds</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">coco</span><span class="o">.</span><span class="n">loadImgs</span><span class="p">(</span><span class="n">imgIds</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">imgIds</span><span class="p">))])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">coco</span><span class="o">.</span><span class="n">loadImgs</span><span class="p">(</span><span class="n">imgIds</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">imgIds</span><span class="p">))]))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">coco</span><span class="o">.</span><span class="n">loadImgs</span><span class="p">(</span><span class="n">imgIds</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">imgIds</span><span class="p">))])[</span><span class="mi">0</span><span class="p">])</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">[1, 65]
+[71938, 223747, 455301, 252294, 61960, 297353, 415882, 273420, 422670, 551439, 458255, 137106, 554266, 290843, 51610, 254368, 270883, 366884, 521509, 347174, 345385, 460333, 332845, 317999, 190637, 40757, 518326, 542776, 355257, 565563, 553788, 506178, 218439, 469067, 170191, 414034, 451155, 532058, 73946, 557916, 46048, 468577, 393569, 200421, 536038, 226408, 171757, 99182, 578545, 239347, 169076, 35062, 111609, 449661, 199551]
+[{&#39;license&#39;: 2, &#39;file_name&#39;: &#39;000000460333.jpg&#39;, &#39;coco_url&#39;: &#39;http://images.cocodataset.org/val2017/000000460333.jpg&#39;, &#39;height&#39;: 480, &#39;width&#39;: 640, &#39;date_captured&#39;: &#39;2013-11-21 01:04:51&#39;, &#39;flickr_url&#39;: &#39;http://farm9.staticflickr.com/8457/7952261340_c1a243c043_z.jpg&#39;, &#39;id&#39;: 460333}]
+{&#39;license&#39;: 1, &#39;file_name&#39;: &#39;000000273420.jpg&#39;, &#39;coco_url&#39;: &#39;http://images.cocodataset.org/val2017/000000273420.jpg&#39;, &#39;height&#39;: 400, &#39;width&#39;: 500, &#39;date_captured&#39;: &#39;2013-11-24 07:35:19&#39;, &#39;flickr_url&#39;: &#39;http://farm1.staticflickr.com/108/363783376_0b170b1135_z.jpg&#39;, &#39;id&#39;: 273420}</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 根据名称打开该图片</span>
+<span class="c1"># I = io.imread(&#39;%s/images/%s/%s&#39;%(dataDir,dataType,img[&#39;file_name&#39;]))</span>
+<span class="c1"># 根据网址下载该图片</span>
+<span class="n">I</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="s1">&#39;coco_url&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">I</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="output_5_0.png" alt="png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 显示注释</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">I</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">annIds</span> <span class="o">=</span> <span class="n">coco</span><span class="o">.</span><span class="n">getAnnIds</span><span class="p">(</span><span class="n">imgIds</span><span class="o">=</span><span class="n">img</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">catIds</span><span class="o">=</span><span class="n">catIds</span><span class="p">,</span> <span class="n">iscrowd</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">anns</span> <span class="o">=</span> <span class="n">coco</span><span class="o">.</span><span class="n">loadAnns</span><span class="p">(</span><span class="n">annIds</span><span class="p">)</span>
+<span class="n">coco</span><span class="o">.</span><span class="n">showAnns</span><span class="p">(</span><span class="n">anns</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="output_6_0.png" alt="png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 导入人的keypoints</span>
+<span class="n">annFile</span> <span class="o">=</span> <span class="s1">&#39;{}/annotations/person_keypoints_{}.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataDir</span><span class="p">,</span><span class="n">dataType</span><span class="p">)</span>
+<span class="n">coco_kps</span><span class="o">=</span><span class="n">COCO</span><span class="p">(</span><span class="n">annFile</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">loading annotations into memory...
+Done (t=0.55s)
+creating index...
+index created!</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 显示人的keypoints</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">I</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">annIds</span> <span class="o">=</span> <span class="n">coco_kps</span><span class="o">.</span><span class="n">getAnnIds</span><span class="p">(</span><span class="n">imgIds</span><span class="o">=</span><span class="n">img</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">catIds</span><span class="o">=</span><span class="n">catIds</span><span class="p">,</span> <span class="n">iscrowd</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">anns</span> <span class="o">=</span> <span class="n">coco_kps</span><span class="o">.</span><span class="n">loadAnns</span><span class="p">(</span><span class="n">annIds</span><span class="p">)</span>
+<span class="n">coco_kps</span><span class="o">.</span><span class="n">showAnns</span><span class="p">(</span><span class="n">anns</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="output_8_0.png" alt="png" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 导入描述</span>
+<span class="n">annFile</span> <span class="o">=</span> <span class="s1">&#39;{}/annotations/captions_{}.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataDir</span><span class="p">,</span><span class="n">dataType</span><span class="p">)</span>
+<span class="n">coco_caps</span><span class="o">=</span><span class="n">COCO</span><span class="p">(</span><span class="n">annFile</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">loading annotations into memory...
+Done (t=0.08s)
+creating index...
+index created!</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">googletrans</span> <span class="kn">import</span> <span class="n">Translator</span>
+<span class="n">translator</span> <span class="o">=</span> <span class="n">Translator</span><span class="p">()</span>
+<span class="c1">#导入google翻译</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 显示描述</span>
+<span class="n">annIds</span> <span class="o">=</span> <span class="n">coco_caps</span><span class="o">.</span><span class="n">getAnnIds</span><span class="p">(</span><span class="n">imgIds</span><span class="o">=</span><span class="n">img</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]);</span>
+<span class="n">anns</span> <span class="o">=</span> <span class="n">coco_caps</span><span class="o">.</span><span class="n">loadAnns</span><span class="p">(</span><span class="n">annIds</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">anns</span><span class="p">:</span><span class="c1">#翻译描述内容 </span>
+    <span class="k">print</span><span class="p">(</span><span class="n">translator</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s1">&#39;caption&#39;</span><span class="p">],</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;zh-cn&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="n">coco_caps</span><span class="o">.</span><span class="n">showAnns</span><span class="p">(</span><span class="n">anns</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">I</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">坐在床的末端的一个小女孩看玩具熊。
+一个小女孩坐与玩具熊的一张床。
+一个小孩子坐看玩具熊的床。
+孩子坐看玩具熊的床。
+一个女孩坐在一张床在一个房间里。
+A little girl sitting at the end of a bed looking at a teddy bear.
+A little girl sitting on a bed with a teddy bear.
+A small child sitting on a bed looking at a teddy bear.
+A child sitting on a bed looking at a teddy bear.
+A girl sitting on a bed in a room.</pre></td></tr></table>
+</div>
+</div>
+<p><img src="output_11_1.png" alt="png" /></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jeff Liu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2019-01-30</span>
+  </p>
+  
+  
+</div><div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/wechat-1.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/alipay-1.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/coco/">COCO</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/purdue3coco/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Purdue机器学习入门（三）COCO数据集导入</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/ubuntu/">
+            <span class="next-text nav-default">ubuntu的USB安装盘制作</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'liu2590-github-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:liu2590@purdue.edu" class="iconfont icon-email" title="email"></a>
+      <a href="liu2590@purdue.edu" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="liu2590" class="iconfont icon-github" title="github"></a>
+  <a href="http://liu2590.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jeff Liu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132979174-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

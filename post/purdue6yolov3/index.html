@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Purdue机器学习入门（六）yolo v3进行物体探测之训练自己的数据 - Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jeff Liu" /><meta name="description" content="yolov3 训练自己的数据集 历时6个月，从零开始学习深度学习，第一个小目标是实现物体探测，在经历过多个坑后，今天终于实现了。记录一下过程。 1 先放最后的" /><meta name="keywords" content="Python, ML, DL" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://liu2590.github.io/post/purdue6yolov3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Purdue机器学习入门（六）yolo v3进行物体探测之训练自己的数据" />
+<meta property="og:description" content="yolov3 训练自己的数据集 历时6个月，从零开始学习深度学习，第一个小目标是实现物体探测，在经历过多个坑后，今天终于实现了。记录一下过程。 1 先放最后的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liu2590.github.io/post/purdue6yolov3/" /><meta property="article:published_time" content="2019-03-21T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-03-21T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Purdue机器学习入门（六）yolo v3进行物体探测之训练自己的数据">
+<meta itemprop="description" content="yolov3 训练自己的数据集 历时6个月，从零开始学习深度学习，第一个小目标是实现物体探测，在经历过多个坑后，今天终于实现了。记录一下过程。 1 先放最后的">
+
+
+<meta itemprop="datePublished" content="2019-03-21T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-03-21T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2601">
+
+
+
+<meta itemprop="keywords" content="YOLO V3," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Purdue机器学习入门（六）yolo v3进行物体探测之训练自己的数据"/>
+<meta name="twitter:description" content="yolov3 训练自己的数据集 历时6个月，从零开始学习深度学习，第一个小目标是实现物体探测，在经历过多个坑后，今天终于实现了。记录一下过程。 1 先放最后的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jeff Liu</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home ·</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives ·</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags ·</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories ·</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+
+<div class="logo-wrapper" style="background:  url('logo.ico') no-repeat;background-size: 60% 100%; " >
+
+  <a href="/" class="logo" >Jeff Liu</a>
+</div>
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Purdue机器学习入门（六）yolo v3进行物体探测之训练自己的数据</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-03-21 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"> 深度学习 </a>
+            <a href="/categories/purdue%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/"> Purdue机器学习入门 </a>
+            </div>
+          <span class="more-meta"> 约 2601 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#yolov3-训练自己的数据集">yolov3 训练自己的数据集</a>
+<ul>
+<li><a href="#1-下载yolov3的工程">1.下载yolov3的工程</a></li>
+<li><a href="#2-修改配置文件">2.修改配置文件</a></li>
+<li><a href="#3-建立数据集-方法一-收集数据-自己手动加标签">3.建立数据集（方法一：收集数据，自己手动加标签）</a></li>
+<li><a href="#3-建立数据集-方法二-收集图片背景数据-建立目标图片数据-png抠图-将目标图片随机叠加到背景-并自动记录位置标签">3.建立数据集（方法二：收集图片背景数据，建立目标图片数据（png抠图），将目标图片随机叠加到背景，并自动记录位置标签）</a></li>
+<li><a href="#4-生成-train-txt-和-val-txt">4.生成 train.txt 和 val.txt</a></li>
+<li><a href="#5-下载预训练模型">5.下载预训练模型</a></li>
+<li><a href="#6-修改cfg-xxx-data">6.修改cfg/xxx.data</a></li>
+<li><a href="#7-修改data-xxx-names">7.修改data/xxx.names</a></li>
+<li><a href="#8-修改cfg-xxx-cfg">8.修改cfg/xxx.cfg</a></li>
+<li><a href="#9-开始训练">9.开始训练</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="yolov3-训练自己的数据集">yolov3 训练自己的数据集</h1>
+
+<blockquote>
+<p>历时6个月，从零开始学习深度学习，第一个小目标是实现物体探测，在经历过多个坑后，今天终于实现了。记录一下过程。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">   先放最后的测试结果，训练的类型是我和我导师的头像，大约50张图片（训练集+测试集），共两类型Liu 和 Okan.</pre></td></tr></table>
+</div>
+</div>
+<p><img src="r.jpg" alt="" /></p>
+
+<p>yolov3 是c语言编写，网上有人已经将之改为pytorch框架下python的，关键是探测算法和cnn神经网络，了解了核心内容后可以根据需要更改为所用框架，用所需语言改写。</p>
+
+<h2 id="1-下载yolov3的工程">1.下载yolov3的工程</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">git clone https://github.com/pjreddie/darknet
+cd darknet</pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-修改配置文件">2.修改配置文件</h2>
+
+<p>vi Makefile</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">GPU = 1 #用GPU进行训练，比cpu快得多，必须更改
+CUDNN = 0
+OPENCV = 0</pre></td></tr></table>
+</div>
+</div>
+<p>保存</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">make</pre></td></tr></table>
+</div>
+</div>
+<p>需要提前安装好cuda，cudnn，opencv（为了显示，非必须，版本不要太高）</p>
+
+<h2 id="3-建立数据集-方法一-收集数据-自己手动加标签">3.建立数据集（方法一：收集数据，自己手动加标签）</h2>
+
+<p>darknet支持VOC和COCO数据集，方法如官网，下面介绍如何建立自己的数据集。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">imgs\
+    1.jpg
+    2.jpg
+    ......
+labels\
+    1.txt
+    2.txt
+    ......</pre></td></tr></table>
+</div>
+</div>
+<p>数据格式如上：
+准备好jpg格式图片，批量改名，批量更改分辨率，大概600像素左右就行，不用太大。
+采用labelImg.exe这个工具加上标签即可，得到1.txt的数据文件。
+其中1.txt 格式如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">80 0.91796875 0.1525821 0.1171875 0.211267
+
+类别号 方框中心归一化x 方框中心归一化y 方框宽度归一化 方框高度归一化</pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>重命名bat脚本（windows）：</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">    @echo off
+    set a=00
+    setlocal EnableDelayedExpansion
+    for %%n in (*.jpg) do (
+    set /A a+=1
+    ren &#34;%%n&#34; &#34;p!a!.jpg&#34;
+    )</pre></td></tr></table>
+</div>
+</div>
+<p><img src="imglable.PNG" alt="" /></p>
+
+<h2 id="3-建立数据集-方法二-收集图片背景数据-建立目标图片数据-png抠图-将目标图片随机叠加到背景-并自动记录位置标签">3.建立数据集（方法二：收集图片背景数据，建立目标图片数据（png抠图），将目标图片随机叠加到背景，并自动记录位置标签）</h2>
+
+<ul>
+<li>好处是一键生成</li>
+<li>详见 makeData.py</li>
+<li>同时可以一键生成全部配置文件，即省去以下4,6,7，8步，详见 makeCFG.py</li>
+</ul>
+
+<p><img src="makedata1.jpg" alt="" />
+<img src="makedata2.jpg" alt="" /></p>
+
+<h2 id="4-生成-train-txt-和-val-txt">4.生成 train.txt 和 val.txt</h2>
+
+<p>其实就是图片的路径，需要根据实际修改（比如添加路径imgs/）。</p>
+
+<p><img src="train.PNG" alt="" /></p>
+
+<blockquote>
+<p>获得文件名bat脚本（windows）</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">DIR *.jpg  /B &gt;train.txt</pre></td></tr></table>
+</div>
+</div>
+<h2 id="5-下载预训练模型">5.下载预训练模型</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">wget https://pjreddie.com/media/files/darknet53.conv.74</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><p>重点：53指的是卷积层数，74指的是取前74层进行微调，最后几层一般是决定分类数量的，需要更改，因此只导入前数层的权重参数进行训练。</p></li>
+
+<li><p>采用partial进行参数自定义抽取
+./darknet partial yolov3.cfg yolov3.weights yolov3.conv.74 74</p></li>
+</ul>
+
+<h2 id="6-修改cfg-xxx-data">6.修改cfg/xxx.data</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">classes= 2 # 训练样本集的类别总数 
+train  = /home/darknet/train.txt #train的路径为训练样本集所在的路径 
+valid  = /home/darknet/val.txt #valid的路径为验证样本集所在的路径 
+names = data/xxx.names #xxx.names文件所在的路径 
+backup = backup</pre></td></tr></table>
+</div>
+</div>
+<h2 id="7-修改data-xxx-names">7.修改data/xxx.names</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">A
+B</pre></td></tr></table>
+</div>
+</div>
+<p>类别名称，根据自己需要修改</p>
+
+<h2 id="8-修改cfg-xxx-cfg">8.修改cfg/xxx.cfg</h2>
+
+<ul>
+<li>如果是训练， batch=64，subdivisions=8，可以根据机器配置适当修改</li>
+<li>如果是测试， batch=1，subdivisions=1</li>
+<li>共有三处需要修改filters和classes（filters=3*（classes+5））</li>
+<li>random=0即关闭多尺度训练(机器好不关闭)</li>
+</ul>
+
+<p>cfg文件参数解释</p>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>batch</td>
+<td>每一次迭代送到网络的图片数量。增大这个可以让网络在较少的迭代次数内完成一个epoch。在固定最大迭代次数的前提下，增加batch会延长训练时间，但会更好的寻找到梯度下降的方向。如果你显存够大，可以适当增大这个值来提高内存利用率。这个值是需要大家不断尝试选取的，过小的话会让训练不够收敛，过大会陷入局部最优。</td>
+</tr>
+
+<tr>
+<td>subdivision</td>
+<td>这个参数会让你的每一个batch不是一下子都丢到网络里。而是分成subdivision对应数字的份数，一份一份的跑完后，在一起打包算作完成一次iteration。会降低显存占用。如果设置为1的话就是一次性把所有batch的图片处理，如果为2的话就是一次一半。</td>
+</tr>
+
+<tr>
+<td>angle</td>
+<td>图片旋转角度，这个用来增强训练效果的。从本质上来说，就是通过旋转图片来变相的增加训练样本集。</td>
+</tr>
+
+<tr>
+<td>saturation，exposure，hue</td>
+<td>饱和度，曝光度，色调，这些都是为了增强训练效果用的。</td>
+</tr>
+
+<tr>
+<td>learning_rate</td>
+<td>学习率，训练发散的话可以降低学习率。学习遇到瓶颈，loss不变的话也减低学习率。</td>
+</tr>
+
+<tr>
+<td>max_batches</td>
+<td>最大迭代次数，训练自动停止条件。</td>
+</tr>
+
+<tr>
+<td>policy</td>
+<td>学习策略，一般都是step这种步进式。</td>
+</tr>
+
+<tr>
+<td>step，scales</td>
+<td>这两个是组合一起的，举个例子：learn_rate: 0.001, step:100,25000,35000   scales: 10, .1, .1 这组数据的意思就是在0-100次iteration期间learning rate为原始0.001，在100-25000次iteration期间learning rate为原始的10倍0.01，在25000-35000次iteration期间learning rate为当前值的0.1倍，就是0.001， 在35000到最大iteration期间使用learning rate为当前值的0.1倍，就是0.0001。随着iteration增加，降低学习率可以是模型更有效的学习，也就是更好的降低train loss。</td>
+</tr>
+</tbody>
+</table>
+
+<p>[](test.cfg)
+[](train.cfg)</p>
+
+<p>*重点*：注意windows和linux文本格式区别，linux下可以用cat xxx.txt 查看是否有^M</p>
+
+<p><img src="note.PNG" alt="" /></p>
+
+<h2 id="9-开始训练">9.开始训练</h2>
+
+<p>从头训练用darknet53.conv.74，继续训练用训练好的权重参数（xxx_900.weights）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">./darknet detector train cfg/xxx.data cfg/xxx.cfg darknet53.conv.74</pre></td></tr></table>
+</div>
+</div>
+<p>多GPU</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">./darknet detector train cfg/xxx.data cfg/xxx.cfg darknet53.conv.74 -gpus 0,1,2,3</pre></td></tr></table>
+</div>
+</div>
+<p><img src="xl.PNG" alt="" /></p>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Region xx:</td>
+<td>cfg文件中yolo-layer的索引；</td>
+</tr>
+
+<tr>
+<td>Avg IOU:   </td>
+<td>当前迭代中，预测的box与标注的box的平均交并比，越大越好，期望数值为1；</td>
+</tr>
+
+<tr>
+<td>Class:       </td>
+<td>标注物体的分类准确率，越大越好，期望数值为1；</td>
+</tr>
+
+<tr>
+<td>obj:           </td>
+<td>越大越好，期望数值为1；</td>
+</tr>
+
+<tr>
+<td>No obj:     </td>
+<td>越小越好；</td>
+</tr>
+
+<tr>
+<td>.5R:           </td>
+<td>以IOU=0.5为阈值时候的recall; recall = 检出的正样本/实际的正样本</td>
+</tr>
+
+<tr>
+<td>0.75R:         </td>
+<td>以IOU=0.75为阈值时候的recall;</td>
+</tr>
+
+<tr>
+<td>count:       </td>
+<td>正样本数目</td>
+</tr>
+</tbody>
+</table>
+
+<p>*重点*：
+- 训练需要很久，50张图片100个epoch大概半小时
+- 刚开始loss很大，1000多，200个循环后，才勉强有效果，500个后才基本出结果，我训练了900个效果才稍好（loss降为0.3），据说要10000以上才好用（据说有人烧过GPU，慎重训练大数据）。
+- 某些层出现-nan是正常的，表示该卷积层上看不到特征图，往往是特征较小区域，没关系。</p>
+
+<ul>
+<li><p>当训练过程中需要输出log日志文件时，需要在训练时一起输出，命令：</p>
+
+<p>./darknet detector train cfg/tiny-yolo.cfg tiny-yolo_8000.conv.9 2&gt;1 | tee log.txt</p></li>
+
+<li><p>训练后测试无结果。原因一是训练发散；二是训练不充分，结果置信概率太低。</p>
+
+<p>　　（1）训练发散，看训练的时候迭代次数后边的两个loss值，如果这两个值不收敛就有问题。可以降低learning rate 和 提高batch；</p>
+
+<p>（2）训练不充分，可在test的时候渐降低 threshold，默认是.25。</p></li>
+</ul>
+
+<p>12.开始测试</p>
+
+<p>./darknet detector test cfg/xxx.data cfg/xxx.cfg backup/xxx_900.weights data/1.jpg</p>
+
+<p>这样就生成了一开始的图片了predictions.jpg。</p>
+
+<p><img src="r.jpg" alt="" /></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jeff Liu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2019-03-21</span>
+  </p>
+  
+  
+</div><div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/wechat-1.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/alipay-1.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/yolo-v3/">YOLO V3</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/purdue5detect/">
+            <span class="next-text nav-default">Purdue机器学习入门（五）图像探测</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'liu2590-github-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:liu2590@purdue.edu" class="iconfont icon-email" title="email"></a>
+      <a href="liu2590@purdue.edu" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="liu2590" class="iconfont icon-github" title="github"></a>
+  <a href="http://liu2590.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jeff Liu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132979174-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

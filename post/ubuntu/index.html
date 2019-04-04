@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ubuntu的USB安装盘制作 - Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jeff Liu" /><meta name="description" content="需要： 一个4GB或更大的USB盘 Microsoft Windows XP或更高版本 Rufus，一款免费的开源USB工具 一个Ubuntu ISO文件 USB选择 执行以下操作在Ru" /><meta name="keywords" content="Python, ML, DL" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://liu2590.github.io/post/ubuntu/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="ubuntu的USB安装盘制作" />
+<meta property="og:description" content="需要： 一个4GB或更大的USB盘 Microsoft Windows XP或更高版本 Rufus，一款免费的开源USB工具 一个Ubuntu ISO文件 USB选择 执行以下操作在Ru" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liu2590.github.io/post/ubuntu/" /><meta property="article:published_time" content="2019-01-29T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-29T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="ubuntu的USB安装盘制作">
+<meta itemprop="description" content="需要： 一个4GB或更大的USB盘 Microsoft Windows XP或更高版本 Rufus，一款免费的开源USB工具 一个Ubuntu ISO文件 USB选择 执行以下操作在Ru">
+
+
+<meta itemprop="datePublished" content="2019-01-29T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-29T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="814">
+
+
+
+<meta itemprop="keywords" content="transfer," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ubuntu的USB安装盘制作"/>
+<meta name="twitter:description" content="需要： 一个4GB或更大的USB盘 Microsoft Windows XP或更高版本 Rufus，一款免费的开源USB工具 一个Ubuntu ISO文件 USB选择 执行以下操作在Ru"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jeff Liu</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home ·</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives ·</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags ·</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories ·</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+
+<div class="logo-wrapper" style="background:  url('logo.ico') no-repeat;background-size: 60% 100%; " >
+
+  <a href="/" class="logo" >Jeff Liu</a>
+</div>
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">ubuntu的USB安装盘制作</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-29 </span>
+        <div class="post-category">
+            <a href="/categories/os/"> os </a>
+            </div>
+          <span class="more-meta"> 约 814 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#需要">需要：</a></li>
+<li><a href="#usb选择">USB选择</a></li>
+<li><a href="#引导选择和分区方案">引导选择和分区方案</a></li>
+<li><a href="#选择ubuntu-iso文件">选择Ubuntu ISO文件</a></li>
+<li><a href="#写iso">写ISO</a></li>
+<li><a href="#额外下载">额外下载</a></li>
+<li><a href="#警告">警告</a></li>
+<li><a href="#编写iso">编写ISO</a></li>
+<li><a href="#安装完成">安装完成</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="需要">需要：</h1>
+
+<ul>
+<li>一个4GB或更大的USB盘</li>
+<li>Microsoft Windows XP或更高版本</li>
+<li>Rufus，一款免费的开源USB工具</li>
+<li>一个Ubuntu ISO文件</li>
+</ul>
+
+<h1 id="usb选择">USB选择</h1>
+
+<p>执行以下操作在Rufus中配置USB设备：</p>
+
+<p><img src="1.png" alt="" /></p>
+
+<ul>
+<li>启动Rufus</li>
+<li>插入USB</li>
+<li>Rufus将更新以在“ 设备”字段中设置设备</li>
+
+<li><p>如果选择的设备不正确（可能您有多个USB存储设备），请从设备字段的下拉菜单中选择正确的设备</p>
+
+<h1 id="引导选择和分区方案">引导选择和分区方案</h1></li>
+</ul>
+
+<p><img src="2.png" alt="" /></p>
+
+<p>选择Boot选项。选择将是Non bootable和FreeDOS。由于您要创建可启动的Ubuntu设备，请选择FreeDOS。</p>
+
+<p>分区方案（MBR）和目标系统（BIOS（或UEFI-CSM））的默认选择是合适的（并且是唯一可用的选项）。</p>
+
+<h1 id="选择ubuntu-iso文件">选择Ubuntu ISO文件</h1>
+
+<p><img src="3.png" alt="" /></p>
+
+<p>要选择先前下载的Ubuntu ISO文件，请单击“Boot selection”右侧的SELECT。如果这是“下载”文件夹中唯一的ISO文件，则只会看到列出的一个文件。
+选择适当的ISO文件，然后单击“ 打开”</p>
+
+<h1 id="写iso">写ISO</h1>
+
+<p><img src="4.png" alt="" /></p>
+
+<p>该卷标将被更新，以反映选择的ISO。
+将所有其他参数保留为默认值，然后单击“ 开始”以启动写入过程。</p>
+
+<h1 id="额外下载">额外下载</h1>
+
+<p><img src="6.png" alt="" /></p>
+
+<p>您可能会收到提醒，Rufus需要其他文件才能完成ISO的编写。如果出现此对话框，请选择是以继续</p>
+
+<h1 id="警告">警告</h1>
+
+<p>Rufus检测到Ubuntu ISO是ISOHybrid图像的警报。这意味着相同的图像文件可以用作DVD和USB的源，而无需转换。
+保持Write in ISO Image模式，然后单击OK继续。</p>
+
+<p><img src="7.png" alt="" /></p>
+
+<p>Rufus还会警告您，所选USB设备上的所有数据都将被销毁。这是一个很好的时刻来仔细检查您是否选择了正确的设备，然后在您确信自己拥有时点击确定。</p>
+
+<p><img src="8.png" alt="" /></p>
+
+<h1 id="编写iso">编写ISO</h1>
+
+<p>ISO现在将写入您的USB，Rufus中的进度条将显示您在此过程中的位置。使用相当现代化的机器，这应该需要大约10分钟。经过的总时间显示在Rufus窗口的右下角。</p>
+
+<p><img src="9.png" alt="" /></p>
+
+<h1 id="安装完成">安装完成</h1>
+
+<p>当Rufus完成USB设备的写入后，状态栏将显示为绿色，并且中心将显示READY字样。选择CLOSE以完成写入过程。</p>
+
+<p><img src="10.png" alt="" /></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jeff Liu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2019-01-29</span>
+  </p>
+  
+  
+</div><div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/wechat-1.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/alipay-1.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/transfer/">transfer</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/cocopaper/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Microsoft COCO：Common Objects in Context[翻译]</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/purdue2transfer/">
+            <span class="next-text nav-default">Purdue机器学习入门（二）迁移学习</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'liu2590-github-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:liu2590@purdue.edu" class="iconfont icon-email" title="email"></a>
+      <a href="liu2590@purdue.edu" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="liu2590" class="iconfont icon-github" title="github"></a>
+  <a href="http://liu2590.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jeff Liu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132979174-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

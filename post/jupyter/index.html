@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Jupyter及其虚环境配置（windows版本） - Relaxed and happy to learn machine learning, deep learning, CNN, pytorch, etc. </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Jeff Liu" /><meta name="description" content="python虚环境建立 python安装完成后需要建立虚环境，虚环境好处就不多说了，必须用 打开cmd，cd到想建立的文件夹下,Jvenv就是建" /><meta name="keywords" content="Python, ML, DL" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://liu2590.github.io/post/jupyter/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Jupyter及其虚环境配置（windows版本）" />
+<meta property="og:description" content="python虚环境建立 python安装完成后需要建立虚环境，虚环境好处就不多说了，必须用 打开cmd，cd到想建立的文件夹下,Jvenv就是建" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://liu2590.github.io/post/jupyter/" /><meta property="article:published_time" content="2019-01-30T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-30T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Jupyter及其虚环境配置（windows版本）">
+<meta itemprop="description" content="python虚环境建立 python安装完成后需要建立虚环境，虚环境好处就不多说了，必须用 打开cmd，cd到想建立的文件夹下,Jvenv就是建">
+
+
+<meta itemprop="datePublished" content="2019-01-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-30T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1381">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Jupyter及其虚环境配置（windows版本）"/>
+<meta name="twitter:description" content="python虚环境建立 python安装完成后需要建立虚环境，虚环境好处就不多说了，必须用 打开cmd，cd到想建立的文件夹下,Jvenv就是建"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Jeff Liu</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home ·</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives ·</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags ·</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories ·</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+
+<div class="logo-wrapper" style="background:  url('logo.ico') no-repeat;background-size: 60% 100%; " >
+
+  <a href="/" class="logo" >Jeff Liu</a>
+</div>
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories ·</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Jupyter及其虚环境配置（windows版本）</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-30 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"> 深度学习 </a>
+            </div>
+          <span class="more-meta"> 约 1381 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#python虚环境建立">python虚环境建立</a></li>
+<li><a href="#将虚环境应用到jupyter上">将虚环境应用到Jupyter上</a></li>
+<li><a href="#修改jupyter保存文件目录">修改jupyter保存文件目录</a></li>
+<li><a href="#jupyter-绘图显示中文">Jupyter 绘图显示中文</a></li>
+<li><a href="#jupyter-lab的安装">Jupyter lab的安装</a></li>
+<li><a href="#jupyter-notebook-的快捷键使用指南">Jupyter NoteBook 的快捷键使用指南</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="python虚环境建立">python虚环境建立</h1>
+
+<blockquote>
+<p>python安装完成后需要建立虚环境，虚环境好处就不多说了，必须用</p>
+</blockquote>
+
+<ul>
+<li>打开cmd，cd到想建立的文件夹下,Jvenv就是建立的虚环境名称,如果没有要先安装：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">pip install virtualenv</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">python -m venv Jvenv</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>激活虚环境</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Jvenv\Scripts\activate.bat</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>cmd中出现(Jvenv)后就可以开心的用pip在自己的虚环境里下载了。</li>
+<li>常用包</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">pip install jupyter
+pip install matplotlib
+pip install scikit-image
+pip install scipy
+pip install pytorch
+pip install torchvision
+pip install opencv-python
+......</pre></td></tr></table>
+</div>
+</div>
+<h1 id="将虚环境应用到jupyter上">将虚环境应用到Jupyter上</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">(Jvenv) $ pip install ipykernel
+(Jvenv) $ ipython kernel install --user --name=Jkernel</pre></td></tr></table>
+</div>
+</div>
+<p>打开Jupyter-notebook,选择Kernel-change kernel为Jkernel</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">(Jvenv) $ Jupyter-notebook</pre></td></tr></table>
+</div>
+</div>
+<h1 id="修改jupyter保存文件目录">修改jupyter保存文件目录</h1>
+
+<ul>
+<li>打开 cmd 输入命令 jupyter notebook &ndash;generate-config</li>
+<li>可以看到生成文件的路径，这个就是生成的配置文件jupyter_notebook_config.py（C:\Users\TTT\AppData\Roaming\SPB_Data\.jupyter）</li>
+<li>打开这个配置文件，找到#c.NotebookApp.notebook_dir = &lsquo; &lsquo;,改成c.NotebookApp.notebook_dir = &lsquo;你想要设置的路径&rsquo;。</li>
+</ul>
+
+<h1 id="jupyter-绘图显示中文">Jupyter 绘图显示中文</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">import matplotlib.pyplot as plt  
+plt.rcParams[&#39;font.sans-serif&#39;] = [u&#39;SimHei&#39;]
+plt.rcParams[&#39;axes.unicode_minus&#39;] = False</pre></td></tr></table>
+</div>
+</div>
+<h1 id="jupyter-lab的安装">Jupyter lab的安装</h1>
+
+<blockquote>
+<p>jupyterlab是jupyter notebook的下一代产品，集成了更多功能。会取代jupyter notebook。</p>
+</blockquote>
+
+<p>安装：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">pip install jupyterlab</pre></td></tr></table>
+</div>
+</div>
+<p>运行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">jupyter lab</pre></td></tr></table>
+</div>
+</div>
+<p><a href="https://zhuanlan.zhihu.com/p/38612108">知乎上的一个讲解</a></p>
+
+<h1 id="jupyter-notebook-的快捷键使用指南">Jupyter NoteBook 的快捷键使用指南</h1>
+
+<ul>
+<li>命令模式快捷键（按 Esc 键开启）:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">快捷键 作用  说明
+Enter   转入编辑模式  
+Shift-Enter 运行本单元，选中下个单元    新单元默认为命令模式
+Ctrl-Enter  运行本单元   
+Alt-Enter   运行本单元，在其下插入新单元  新单元默认为编辑模式
+Y   单元转入代码状态    
+M   单元转入 markdown 状态    
+R   单元转入 raw 状态 
+1   设定 1 级标题    仅在 markdown 状态下时建议使用标题相关快捷键，如果单元处于其他状态，则会强制切换到 markdown 状态
+2   设定 2 级标题    
+3   设定 3 级标题    
+4   设定 4 级标题    
+5   设定 5 级标题    
+6   设定 6 级标题    
+Up  选中上方单元  
+K   选中上方单元  
+Down    选中下方单元  
+J   选中下方单元  
+Shift-K 连续选择上方单元    
+Shift-J 连续选择下方单元    
+A   在上方插入新单元    
+B   在下方插入新单元    
+X   剪切选中的单元 
+C   复制选中的单元 
+Shift-V 粘贴到上方单元 
+V   粘贴到下方单元 
+Z   恢复删除的最后一个单元 
+D,D 删除选中的单元 连续按两个 D 键
+Shift-M 合并选中的单元 
+Ctrl-S  保存当前 NoteBook   
+S   保存当前 NoteBook   
+L   开关行号    编辑框的行号是可以开启和关闭的
+O   转换输出    
+Shift-O 转换输出滚动  
+Esc 关闭页面    
+Q   关闭页面    
+H   显示快捷键帮助 
+I,I 中断 NoteBook 内核  
+0,0 重启 NoteBook 内核  
+Shift   忽略  
+Shift-Space 向上滚动    
+Space   向下滚动</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>编辑模式快捷键（ 按 Enter 键启动）:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">快捷键 作用  说明
+Tab 代码补全或缩进 
+Shift-Tab   提示  输出帮助信息，部分函数、类、方法等会显示其定义原型，如果在其后加 ? 再运行会显示更加详细的帮助
+Ctrl-]  缩进  向右缩进
+Ctrl-[  解除缩进    向左缩进
+Ctrl-A  全选  
+Ctrl-Z  撤销  
+Ctrl-Shift-Z    重做  
+Ctrl-Y  重做  
+Ctrl-Home   跳到单元开头  
+Ctrl-Up 跳到单元开头  
+Ctrl-End    跳到单元末尾  
+Ctrl-Down   跳到单元末尾  
+Ctrl-Left   跳到左边一个字首    
+Ctrl-Right  跳到右边一个字首    
+Ctrl-Backspace  删除前面一个字 
+Ctrl-Delete 删除后面一个字 
+Esc 切换到命令模式 
+Ctrl-M  切换到命令模式 
+Shift-Enter 运行本单元，选中下一单元    新单元默认为命令模式
+Ctrl-Enter  运行本单元   
+Alt-Enter   运行本单元，在下面插入一单元  新单元默认为编辑模式
+Ctrl-Shift--    分割单元    按光标所在行进行分割
+Ctrl-Shift-Subtract 分割单元    
+Ctrl-S  保存当前 NoteBook   
+Shift   忽略  
+Up  光标上移或转入上一单元 
+Down    光标下移或转入下一单元 
+Ctrl-/  注释整行/撤销注释   仅代码状态有效</pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Jeff Liu</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2019-01-30</span>
+  </p>
+  
+  
+</div><div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/wechat-1.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/reward/alipay-1.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/coco/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">COCO图像数据集</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/cocopaper/">
+            <span class="next-text nav-default">Microsoft COCO：Common Objects in Context[翻译]</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'liu2590-github-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:liu2590@purdue.edu" class="iconfont icon-email" title="email"></a>
+      <a href="liu2590@purdue.edu" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="liu2590" class="iconfont icon-github" title="github"></a>
+  <a href="http://liu2590.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Jeff Liu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-132979174-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
