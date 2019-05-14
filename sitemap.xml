@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>http://liu2590.github.io/post/fish/</loc>
+    <lastmod>2019-05-14T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://liu2590.github.io/post/purdue6yolov3/</loc>
     <lastmod>2019-03-21T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -115,6 +122,12 @@
   </url>
   
   <url>
+    <loc>http://liu2590.github.io/post/fish/fish/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://liu2590.github.io/tags/cnn/</loc>
     <lastmod>2019-01-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -157,7 +170,7 @@
   
   <url>
     <loc>http://liu2590.github.io/post/</loc>
-    <lastmod>2019-03-21T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-14T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

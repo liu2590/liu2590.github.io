@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-03-21T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-03-21T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2601">
+<meta itemprop="wordCount" content="2598">
 
 
 
@@ -136,7 +136,7 @@
             <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"> 深度学习 </a>
             <a href="/categories/purdue%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/"> Purdue机器学习入门 </a>
             </div>
-          <span class="more-meta"> 约 2601 字 </span>
+          <span class="more-meta"> 约 2598 字 </span>
           <span class="more-meta"> 预计阅读 6 分钟 </span>
         
       </div>
@@ -166,6 +166,8 @@
 </div>
     <div class="post-content">
       
+
+<p><img src="purdue.jpg" alt="png" /></p>
 
 <h1 id="yolov3-训练自己的数据集">yolov3 训练自己的数据集</h1>
 
@@ -503,12 +505,14 @@ B</pre></td></tr></table>
 </tbody>
 </table>
 
-<p>*重点*：
-- 训练需要很久，50张图片100个epoch大概半小时
-- 刚开始loss很大，1000多，200个循环后，才勉强有效果，500个后才基本出结果，我训练了900个效果才稍好（loss降为0.3），据说要10000以上才好用（据说有人烧过GPU，慎重训练大数据）。
-- 某些层出现-nan是正常的，表示该卷积层上看不到特征图，往往是特征较小区域，没关系。</p>
+<p>*重点*：</p>
 
 <ul>
+<li>训练需要很久，50张图片100个epoch大概半小时</li>
+<li>刚开始loss很大，1000多，200个循环后，才勉强有效果，500个后才基本出结果，我训练了900个效果才稍好（loss降为0.3），据说要10000以上才好用（据说有人烧过GPU，慎重训练大数据）。</li>
+
+<li><p>某些层出现-nan是正常的，表示该卷积层上看不到特征图，往往是特征较小区域，没关系。</p></li>
+
 <li><p>当训练过程中需要输出log日志文件时，需要在训练时一起输出，命令：</p>
 
 <p>./darknet detector train cfg/tiny-yolo.cfg tiny-yolo_8000.conv.9 2&gt;1 | tee log.txt</p></li>
@@ -560,7 +564,11 @@ B</pre></td></tr></table>
           <a href="/tags/yolo-v3/">YOLO V3</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/fish/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">fish</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/post/purdue5detect/">
             <span class="next-text nav-default">Purdue机器学习入门（五）图像探测</span>
             <span class="next-text nav-mobile">下一篇</span>
